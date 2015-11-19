@@ -1,0 +1,7 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<info>
+	<infoitem key="UD_usuario" value="name:codusuario;datatype:int,name:desusuario;datatype:string,name:dessenha;datatype:string,name:flapercadusu;datatype:string,name:flapercadmenu;datatype:string" />
+	<infoitem key="UD_menus" value="name:codmenu;datatype:int,name:desmenu;datatype:string" />
+	<infoitem key="UD_premissoes" value="name:codmenu;datatype:int" />
+	<infoitem key="UD_permissoes" value="name:codmenu;datatype:int" />
+</info>

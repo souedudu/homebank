@@ -1,0 +1,16 @@
+table {
+	font-family: Verdana, Arial, Helvetica, sans-serif;
+	font-size: 10px;
+	text-decoration: none;
+}
+.CorFonteZinza{
+	color:#666666;
+}
+.CorFonteAzul{
+	color:#003366;
+}
+.Formulario{
+	font-family: Verdana, Arial, Helvetica, sans-serif;
+	font-size: 11px;
+	border-width:thin;
+}

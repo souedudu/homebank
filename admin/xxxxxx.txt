@@ -1,0 +1,86 @@
+Select s.*, c.nomcliente, cc.numcontacorrente, t.destiposervsol
+                 From solicitacaoserv s, cliente c, contacorrente cc, tiposervsolicitacao t
+                 where s.dtconclusao is null  and  s.dtencerramento is null
+                   and s.codtecnicoresp is null
+                   and s.codcliente = c.codcliente and s.codcliente = cc.codcliente
+                   and s.codtiposervsol = t.codtiposervsol
+                 order by s.dtsolicitacao
+
+
+SELECT dtsolicitacao
+FROM `solicitacaoserv`
+where dtsolicitacao  between  '2005-12-09' and '2005-12-20'
+
+
+
+SELECT count(*) totabertas
+FROM solicitacaoserv
+where dtconclusao is null
+
+SELECT count(*) totconcluidas
+FROM solicitacaoserv
+where dtconclusao is not null
+
+SELECT count(*) totcanceladas
+FROM solicitacaoserv
+where flacancelada is not null
+
+
+
+
+SELECT year(dtsolicitacao) ano, month(dtsolicitacao) mes,  count(*) totabertas
+FROM solicitacaoserv
+where dtconclusao is null
+group by year(dtsolicitacao) , month(dtsolicitacao) 
+
+SELECT year(dtsolicitacao) ano, month(dtsolicitacao) mes,  count(*) totabertas
+FROM solicitacaoserv
+where dtconclusao is not null
+group by year(dtsolicitacao) , month(dtsolicitacao) 
+
+SELECT year(dtsolicitacao) ano, month(dtsolicitacao) mes,  count(*) totabertas
+FROM solicitacaoserv
+where flacancelada is not null
+group by year(dtsolicitacao) , month(dtsolicitacao) 
+
+
+
+
+
+select c.nomcliente, c.numcpfcnpj from contacorrente cc, cliente c
+	               where cc.numcontacorrente = '".$dados['numcontacorrente']."'"."
+				    and cc.codcliente = c.codcliente
+
+
+
+
+
+-------------------------------------------------------
+
+
+
+ESTATISTICA DE AVALIACAO DE SERVIÇOS
+-------------------------------------------------------
+
+1)
+SELECT count(*) totalsol
+FROM solicitacaoserv
+
+2)
+SELECT count(*) totavalgeralruim
+FROM avaliacaosol 
+Where flaavalatendimento = 'u'
+
+3)
+SELECT count(*) totavalgeralbom
+FROM avaliacaosol 
+Where flaavalatendimento = 'b'
+
+4)
+SELECT count(*) totavalgeralregular
+FROM avaliacaosol 
+Where flaavalatendimento = 'r'
+
+5)
+SELECT count(*) totaval
+FROM avaliacaosol

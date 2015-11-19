@@ -1,0 +1,6 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<info>
+	<infoitem key="UD_mensagens" value="name:codmenatendimento;datatype:int,name:desmenatendimento;datatype:string" />
+	<infoitem key="UD_andamentos" value="name:codandsolicitacao;datatype:int,name:desmenatendimento;datatype:string,name:nomtecnicoresp;datatype:string,name:descompmensagem;datatype:string,name:data_andamento;datatype:string,name:hora_andamento;datatype:string" />
+	<infoitem key="UD_tecnico" value="name:codtecnicoresp;datatype:int,name:nomtecnicoresp;datatype:string" />
+</info>

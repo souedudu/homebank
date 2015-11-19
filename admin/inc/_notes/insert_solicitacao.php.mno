@@ -1,0 +1,6 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<info>
+	<infoitem key="UD_tipos" value="name:tipos;datatype:string,name:codtiposervsol;datatype:int" />
+	<infoitem key="UD_tecnico" value="name:codtecnicoresp;datatype:int,name:desusuario;datatype:string" />
+	<infoitem key="UD_conta_cliente" value="name:cc_nome;datatype:string,name:numcontacorrente;datatype:int" />
+</info>

@@ -1,0 +1,22 @@
+Falta fazer
+
+1 - Atualização do cliente
+2 - Troca a Senha do cliente - OK!
+3 - troca a senha do usuario no administrativo - OK!
+4 - fazer o css para todas as páginas - OK!
+5 - Em todas as consultas fazer duas colunas para os campos - OK!
+6 - fazer o menu de consultas - OK!
+7 - No cadastro de solicitação quando o tecnico cadastrar a solicitação
+    grava o tecnico e quando for o cliente grava o cliente. - OK!
+
+8 - Lista dos Clientes posto/núcleo
+9 - Lista de Descrição de Movimentos CC
+10 - Lista de Descrição de Movimentos Capital
+11 - Simulador de Empréstimo
+
+12 - Estatisticas de Avalia - OK!
+   1 - Avaliação Geral - OK!
+   2 - Tempo de Atendimento - OK!
+   3 - Qualidade do Atendimento - OK!
+   4 - Tipo de Relacionamento - OK!
+  

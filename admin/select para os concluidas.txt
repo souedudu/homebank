@@ -1,0 +1,5 @@
+SELECT *, year(dtconclusao) ano, month(dtconclusao) mes
+FROM `solicitacaoserv`
+where year(dtconclusao)  <> 0
+group by year(dtconclusao), month(dtconclusao)
+order by year(dtconclusao), month(dtconclusao)

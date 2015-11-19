@@ -1,0 +1,5 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<info>
+	<infoitem key="UD_consulta" value="name:codsolicitacao;datatype:int,name:destiposervsol;datatype:string,name:numcontacorrente;datatype:string,name:data_solicitacao;datatype:string,name:hora_solicitacao;datatype:string,name:data_conclusao;datatype:string,name:tecnico_responsavel;datatype:string,name:nomcliente;datatype:string" />
+	<infoitem key="UD_solicitacao" value="name:codsolicitacao;datatype:int,name:destiposervsol;datatype:string,name:numcontacorrente;datatype:string,name:data_solicitacao;datatype:string,name:hora_solicitacao;datatype:string,name:data_conclusao;datatype:string,name:tecnico_responsavel;datatype:string,name:nomcliente;datatype:string" />
+</info>

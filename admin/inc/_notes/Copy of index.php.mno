@@ -1,0 +1,4 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<info>
+	<infoitem key="UD_solicitacao" value="name:codsolicitacao;datatype:int,name:destiposervsol;datatype:string,name:numcontacorrente;datatype:int,name:nomcliente;datatype:string,name:data_solicitacao;datatype:string,name:hora_solicitacao;datatype:string,name:codtipoconta;datatype:string" />
+</info>

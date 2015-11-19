@@ -1,0 +1,62 @@
+/***********************************************/
+/* estilo.css                            */
+/***********************************************/
+
+/***********************************************/
+/* HTML tag styles                             */
+/***********************************************/
+a:link {text-decoration: none;color: #3A9CCD}
+a:active {text-decoration: none;}
+a:visited {text-decoration: none;color: #3A9CCD}
+a:hover {text-decoration: underline;color: #3A9CCD}
+
+.form {
+	font-family: Verdana;
+	font-size: 10px;
+	color: #333333;
+	border: 1px solid #A2A941;
+	background-color: #A2A941;
+	align: center;
+}
+
+.form_inicio {
+	font-family: Verdana;
+	font-size: 10px;
+	color: #333333;
+	border: 1px solid #C0C0C0;
+	background-color: #F5F5F5;
+	align: center;
+}
+
+h1{
+ font: 55% Verdana, Arial, Helvetica, sans-serif;
+ color: #3A9CCD;
+ margin: 0px;
+ padding: 0px;
+
+}
+
+h2{
+ font: 90% Verdana, Arial, Helvetica, sans-serif;
+ color: #D0D0D0;
+ margin: 0px;
+ padding: 0px;
+}
+table {
+	font-family: Verdana, Arial, Helvetica, sans-serif;
+	font-size: 10px;
+	text-decoration: none;
+        border= 0px;
+}
+.CorFonteZinza{
+	color:#666666;
+}
+.CorFonteAzul{
+	color:#003366;
+}
+.Formulario{
+	font-family: Verdana, Arial, Helvetica, sans-serif;
+	font-size: 11px;
+	border-width:thin;
+}
+

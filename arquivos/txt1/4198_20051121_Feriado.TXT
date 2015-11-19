@@ -1,0 +1,281 @@
+25/12/2030NATAL                                   1
+15/11/2030PROCLAMAÇÃO DA REPÚBLICA                1
+02/11/2030FINADOS                                 1
+12/10/2030PADROEIRA DO BRASIL                     1
+07/09/2030INDEPENDÊNCIA DO BRASIL                 1
+01/05/2030DIA DO TRABALHADOR                      1
+21/04/2030TIRADENTES                              1
+01/01/2030CONFRATERNIZAÇÃO UNIVERSAL              1
+25/12/2029NATAL                                   1
+15/11/2029PROCLAMAÇÃO DA REPÚBLICA                1
+02/11/2029FINADOS                                 1
+12/10/2029PADROEIRA DO BRASIL                     1
+07/09/2029INDEPENDÊNCIA DO BRASIL                 1
+01/05/2029DIA DO TRABALHADOR                      1
+21/04/2029TIRADENTES                              1
+01/01/2029CONFRATERNIZAÇÃO UNIVERSAL              1
+25/12/2028NATAL                                   1
+15/11/2028PROCLAMAÇÃO DA REPÚBLICA                1
+02/11/2028FINADOS                                 1
+12/10/2028PADROEIRA DO BRASIL                     1
+07/09/2028INDEPENDÊNCIA DO BRASIL                 1
+01/05/2028DIA DO TRABALHADOR                      1
+21/04/2028TIRADENTES                              1
+01/01/2028CONFRATERNIZAÇÃO UNIVERSAL              1
+25/12/2027NATAL                                   1
+15/11/2027PROCLAMAÇÃO DA REPÚBLICA                1
+02/11/2027FINADOS                                 1
+12/10/2027PADROEIRA DO BRASIL                     1
+07/09/2027INDEPENDÊNCIA DO BRASIL                 1
+01/05/2027DIA DO TRABALHADOR                      1
+21/04/2027TIRADENTES                              1
+01/01/2027CONFRATERNIZAÇÃO UNIVERSAL              1
+25/12/2026NATAL                                   1
+15/11/2026PROCLAMAÇÃO DA REPÚBLICA                1
+02/11/2026FINADOS                                 1
+12/10/2026PADROEIRA DO BRASIL                     1
+07/09/2026INDEPENDÊNCIA DO BRASIL                 1
+01/05/2026DIA DO TRABALHADOR                      1
+21/04/2026TIRADENTES                              1
+01/01/2026CONFRATERNIZAÇÃO UNIVERSAL              1
+25/12/2025NATAL                                   1
+15/11/2025PROCLAMAÇÃO DA REPÚBLICA                1
+02/11/2025FINADOS                                 1
+12/10/2025PADROEIRA DO BRASIL                     1
+07/09/2025INDEPENDÊNCIA DO BRASIL                 1
+01/05/2025DIA DO TRABALHADOR                      1
+21/04/2025TIRADENTES                              1
+01/01/2025CONFRATERNIZAÇÃO UNIVERSAL              1
+25/12/2024NATAL                                   1
+15/11/2024PROCLAMAÇÃO DA REPÚBLICA                1
+02/11/2024FINADOS                                 1
+12/10/2024PADROEIRA DO BRASIL                     1
+07/09/2024INDEPENDÊNCIA DO BRASIL                 1
+01/05/2024DIA DO TRABALHADOR                      1
+21/04/2024TIRADENTES                              1
+01/01/2024CONFRATERNIZAÇÃO UNIVERSAL              1
+25/12/2023NATAL                                   1
+15/11/2023PROCLAMAÇÃO DA REPÚBLICA                1
+02/11/2023FINADOS                                 1
+12/10/2023PADROEIRA DO BRASIL                     1
+07/09/2023INDEPENDÊNCIA DO BRASIL                 1
+01/05/2023DIA DO TRABALHADOR                      1
+21/04/2023TIRADENTES                              1
+01/01/2023CONFRATERNIZAÇÃO UNIVERSAL              1
+25/12/2022NATAL                                   1
+15/11/2022PROCLAMAÇÃO DA REPÚBLICA                1
+02/11/2022FINADOS                                 1
+12/10/2022PADROEIRA DO BRASIL                     1
+07/09/2022INDEPENDÊNCIA DO BRASIL                 1
+01/05/2022DIA DO TRABALHADOR                      1
+21/04/2022TIRADENTES                              1
+01/01/2022CONFRATERNIZAÇÃO UNIVERSAL              1
+25/12/2021NATAL                                   1
+15/11/2021PROCLAMAÇÃO DA REPÚBLICA                1
+02/11/2021FINADOS                                 1
+12/10/2021PADROEIRA DO BRASIL                     1
+07/09/2021INDEPENDÊNCIA DO BRASIL                 1
+01/05/2021DIA DO TRABALHADOR                      1
+21/04/2021TIRADENTES                              1
+01/01/2021CONFRATERNIZAÇÃO UNIVERSAL              1
+25/12/2020NATAL                                   1
+15/11/2020PROCLAMAÇÃO DA REPÚBLICA                1
+02/11/2020FINADOS                                 1
+12/10/2020PADROEIRA DO BRASIL                     1
+07/09/2020INDEPENDÊNCIA DO BRASIL                 1
+01/05/2020DIA DO TRABALHADOR                      1
+21/04/2020TIRADENTES                              1
+01/01/2020CONFRATERNIZAÇÃO UNIVERSAL              1
+25/12/2019NATAL                                   1
+15/11/2019PROCLAMAÇÃO DA REPÚBLICA                1
+02/11/2019FINADOS                                 1
+12/10/2019PADROEIRA DO BRASIL                     1
+07/09/2019INDEPENDÊNCIA DO BRASIL                 1
+01/05/2019DIA DO TRABALHADOR                      1
+21/04/2019TIRADENTES                              1
+01/01/2019CONFRATERNIZAÇÃO UNIVERSAL              1
+25/12/2018NATAL                                   1
+15/11/2018PROCLAMAÇÃO DA REPÚBLICA                1
+02/11/2018FINADOS                                 1
+12/10/2018PADROEIRA DO BRASIL                     1
+07/09/2018INDEPENDÊNCIA DO BRASIL                 1
+01/05/2018DIA DO TRABALHADOR                      1
+21/04/2018TIRADENTES                              1
+01/01/2018CONFRATERNIZAÇÃO UNIVERSAL              1
+25/12/2017NATAL                                   1
+15/11/2017PROCLAMAÇÃO DA REPÚBLICA                1
+02/11/2017FINADOS                                 1
+12/10/2017PADROEIRA DO BRASIL                     1
+07/09/2017INDEPENDÊNCIA DO BRASIL                 1
+01/05/2017DIA DO TRABALHADOR                      1
+21/04/2017TIRADENTES                              1
+01/01/2017CONFRATERNIZAÇÃO UNIVERSAL              1
+25/12/2016NATAL                                   1
+15/11/2016PROCLAMAÇÃO DA REPÚBLICA                1
+02/11/2016FINADOS                                 1
+12/10/2016PADROEIRA DO BRASIL                     1
+07/09/2016INDEPENDÊNCIA DO BRASIL                 1
+01/05/2016DIA DO TRABALHADOR                      1
+21/04/2016TIRADENTES                              1
+01/01/2016CONFRATERNIZAÇÃO UNIVERSAL              1
+25/12/2015NATAL                                   1
+15/11/2015PROCLAMAÇÃO DA REPÚBLICA                1
+02/11/2015FINADOS                                 1
+12/10/2015PADROEIRA DO BRASIL                     1
+07/09/2015INDEPENDÊNCIA DO BRASIL                 1
+01/05/2015DIA DO TRABALHADOR                      1
+21/04/2015TIRADENTES                              1
+01/01/2015CONFRATERNIZAÇÃO UNIVERSAL              1
+25/12/2014NATAL                                   1
+15/11/2014PROCLAMAÇÃO DA REPÚBLICA                1
+02/11/2014FINADOS                                 1
+12/10/2014PADROEIRA DO BRASIL                     1
+07/09/2014INDEPENDÊNCIA DO BRASIL                 1
+01/05/2014DIA DO TRABALHADOR                      1
+21/04/2014TIRADENTES                              1
+01/01/2014CONFRATERNIZAÇÃO UNIVERSAL              1
+25/12/2013NATAL                                   1
+15/11/2013PROCLAMAÇÃO DA REPÚBLICA                1
+02/11/2013FINADOS                                 1
+12/10/2013PADROEIRA DO BRASIL                     1
+07/09/2013INDEPENDÊNCIA DO BRASIL                 1
+01/05/2013DIA DO TRABALHADOR                      1
+21/04/2013TIRADENTES                              1
+01/01/2013CONFRATERNIZAÇÃO UNIVERSAL              1
+25/12/2012NATAL                                   1
+15/11/2012PROCLAMAÇÃO DA REPÚBLICA                1
+02/11/2012FINADOS                                 1
+12/10/2012PADROEIRA DO BRASIL                     1
+07/09/2012INDEPENDÊNCIA DO BRASIL                 1
+01/05/2012DIA DO TRABALHADOR                      1
+21/04/2012TIRADENTES                              1
+01/01/2012CONFRATERNIZAÇÃO UNIVERSAL              1
+25/12/2011NATAL                                   1
+15/11/2011PROCLAMAÇÃO DA REPÚBLICA                1
+02/11/2011FINADOS                                 1
+12/10/2011PADROEIRA DO BRASIL                     1
+07/09/2011INDEPENDÊNCIA DO BRASIL                 1
+01/05/2011DIA DO TRABALHADOR                      1
+21/04/2011TIRADENTES                              1
+01/01/2011CONFRATERNIZAÇÃO UNIVERSAL              1
+25/12/2010NATAL                                   1
+15/11/2010PROCLAMAÇÃO DA REPÚBLICA                1
+02/11/2010FINADOS                                 1
+12/10/2010PADROEIRA DO BRASIL                     1
+07/09/2010INDEPENDÊNCIA DO BRASIL                 1
+01/05/2010DIA DO TRABALHADOR                      1
+21/04/2010TIRADENTES                              1
+01/01/2010CONFRATERNIZAÇÃO UNIVERSAL              1
+25/12/2009NATAL                                   1
+15/11/2009PROCLAMAÇÃO DA REPÚBLICA                1
+02/11/2009FINADOS                                 1
+12/10/2009PADROEIRA DO BRASIL                     1
+07/09/2009INDEPENDÊNCIA DO BRASIL                 1
+01/05/2009DIA DO TRABALHADOR                      1
+21/04/2009TIRADENTES                              1
+01/01/2009CONFRATERNIZAÇÃO UNIVERSAL              1
+25/12/2008NATAL                                   1
+15/11/2008PROCLAMAÇÃO DA REPÚBLICA                1
+02/11/2008FINADOS                                 1
+12/10/2008PADROEIRA DO BRASIL                     1
+07/09/2008INDEPENDÊNCIA DO BRASIL                 1
+01/05/2008DIA DO TRABALHADOR                      1
+21/04/2008TIRADENTES                              1
+01/01/2008CONFRATERNIZAÇÃO UNIVERSAL              1
+25/12/2007NATAL                                   1
+15/11/2007PROCLAMAÇÃO DA REPÚBLICA                1
+02/11/2007FINADOS                                 1
+12/10/2007PADROEIRA DO BRASIL                     1
+07/09/2007INDEPENDÊNCIA DO BRASIL                 1
+01/05/2007DIA DO TRABALHADOR                      1
+21/04/2007TIRADENTES                              1
+01/01/2007CONFRATERNIZAÇÃO UNIVERSAL              1
+25/12/2006NATAL                                   1
+15/11/2006PROCLAMAÇÃO DA REPÚBLICA                1
+02/11/2006FINADOS                                 1
+12/10/2006PADROEIRA DO BRASIL                     1
+07/09/2006INDEPENDÊNCIA DO BRASIL                 1
+15/06/2006CORPUS CHRISTI                          1
+01/05/2006DIA DO TRABALHADOR                      1
+21/04/2006TIRADENTES                              1
+14/04/2006SEXTA FEIRA SANTA                       1
+28/02/2006CARNAVAL                                1
+27/02/2006CARNAVAL                                1
+01/01/2006CONFRATERNIZAÇÃO UNIVERSAL              1
+25/12/2005NATAL                                   1
+30/11/2005DIA DO EVANGELICO                       2
+15/11/2005PROCLAMAÇÃO DA REPÚBLICA                1
+02/11/2005FINADOS                                 1
+12/10/2005PADROEIRA DO BRASIL                     1
+07/09/2005INDEPENDENCIA DO BRASIL                 1
+26/05/2005CORPUS CHRISTI                          1
+01/05/2005DIA DO TRABALHO                         1
+21/04/2005TIRADENTES                              1
+25/03/2005SEXTA FEIRA SANTA                       1
+08/02/2005CARNAVAL                                1
+07/02/2005CARNAVAL                                1
+01/01/2005CONFRATERNIZAÇÃO UNIVERSAL              1
+25/12/2004NATAL                                   1
+30/11/2004Dia dos Evangélicos                     2
+15/11/2004PROCLAMAÇÃO DA REPÚBLICA                1
+02/11/2004FINADOS                                 1
+12/10/2004NOSSA SENHORA APARECIDA                 1
+07/09/2004INDEPENDENCIA DO BRASIL                 1
+10/06/2004CORPUS CHRISTI                          1
+01/05/2004DIA DO TRABALHO                         1
+21/04/2004TIRADENTES                              1
+09/04/2004PAIXÃO DE CRISTO                        1
+24/02/2004CARNAVAL                                1
+23/02/2004CARNAVAL                                1
+01/01/2004CONFRATERNIZAÇÃO UNIVERSAL              1
+25/12/2003NATAL                                   1
+15/11/2003PROCLAMAÇÃO DA REPÚBLICA                1
+02/11/2003FINADOS                                 1
+12/10/2003NOSSA SRA APARECIDA                     1
+07/09/2003INDEPENDENCIA DO BRASIL                 1
+19/06/2003CORPUS CHRISTI                          1
+01/05/2003DIA DO TRABALHO                         1
+21/04/2003TIRADENTES                              1
+18/04/2003SEXTA FEIRA SANTA                       1
+04/03/2003CARNAVAL                                1
+03/03/2003CARNAVAL                                1
+01/01/2003CONFRATERNIZAÇÃO UNIVERSAL              1
+25/12/2002NATAL                                   1
+15/11/2002PROCLAMAÇÃO DA REPÚBLICA                1
+02/11/2002FINADOS                                 1
+12/10/2002NOSSA SENHORA APARECIDA                 1
+07/09/2002INDEPENDENCIA DO BRASIL                 1
+30/05/2002CORPUS CHRISTI                          1
+01/05/2002DIA DO TRABALHO                         1
+21/04/2002TIRADENTES                              1
+29/03/2002SEXTA FEIRA SANTA                       1
+12/02/2002CARNAVAL                                1
+11/02/2002CARNAVAL                                1
+01/01/2002DIA DA CONFRATERNIZAÇÃO UNIVERSAL       1
+25/12/2001NATAL                                   1
+15/11/2001PROCLAMAÇÃO DA REPÚBLICA                1
+02/11/2001FINADOS                                 1
+12/10/2001NOSSA SENHORA APARECIDA                 1
+07/09/2001INDEPENDÊNCIA DO BRASIL                 1
+02/09/2001FINADOS                                 1
+14/06/2001CORPUS CHRISTI                          1
+01/05/2001DIA DO TRABALHO                         1
+21/04/2001TIRADENTES                              1
+13/04/2001SEXTA FEIRA SANTA                       1
+27/02/2001CARNAVAL                                1
+26/02/2001CARNAVAL                                4
+01/01/2001DIA DA CONFRATERNIZAÇÃO UNIVERSAL       1
+25/12/2000NATAL                                   1
+30/11/2000DIA DO EVANGELICO                       2
+15/11/2000PROCLAMACAO DA REPUBLICA                1
+02/11/2000FINADOS                                 1
+12/10/2000NOSSA SENHORA APARECIDA                 1
+08/09/2000FERIADO DE PRIMEIRO DIA APOS 07/SET.    1
+07/09/2000INDEPENDENCIA DO BRASIL                 1
+22/06/2000CORPUS CHRISTI                          1
+07/03/2000CARNAVAL                                1
+01/01/2000DIA DA CONFRATERNIZAÇÃO UNIVERSAL..     4
+25/12/1999NATAL                                   1
+15/11/1999PROCLAMACAO DA REPÚBLICA                1
+02/11/1999FINADOS                                 1
+12/10/1999DIA DA PADROEIRA DO BRASIL              1

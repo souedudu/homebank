@@ -1,0 +1,4 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<info>
+	<infoitem key="dw_new_image_map" value="&lt;MAP name=&quot;Map2&quot;&gt;&#xD;&#xD;&lt;AREA SHAPE=&quot;rect&quot; COORDS=&quot;46,27,111,41&quot; HREF=&quot;insert_solicitacao.php&quot; onMouseOut=&quot;MM_startTimeout();&quot;&gt;&#xD;&lt;AREA SHAPE=&quot;rect&quot; COORDS=&quot;46,46,108,60&quot; HREF=&quot;consultasolicitacao.php&quot; onMouseOut=&quot;MM_startTimeout();&quot;&gt;&#xD;&lt;AREA SHAPE=&quot;rect&quot; COORDS=&quot;46,63,102,77&quot; HREF=&quot;&lt;?=$concluisolicitacao?&gt;&quot; onMouseOut=&quot;MM_startTimeout();&quot;&gt;&#xD;&lt;AREA SHAPE=&quot;rect&quot; COORDS=&quot;46,81,85,95&quot; HREF=&quot;solicitatriagem.php&quot; onMouseOut=&quot;MM_startTimeout();&quot;&gt;&#xD;&lt;AREA SHAPE=&quot;rect&quot; COORDS=&quot;46,99,150,113&quot; HREF=&quot;andamentosolicitacao.php&quot; onMouseOut=&quot;MM_startTimeout();&quot;&gt;&#xD;&#xD;&lt;/MAP&gt;" />
+</info>

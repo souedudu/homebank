@@ -1,0 +1,124 @@
+020001CONTA CAPITAL                                     11
+030001CONTA CORRENTE DEPÓSITOS A VISTA                  01
+030002CENTRALIZAÇÃO FINANCEIRA                          01
+030003CONTA CORRENTE DEP.INVESTIMENTO                   01
+030004CHEQUES ADMINISTRATIVOS                           01
+030005CORRESPONDENTES NO PAÍS                           01
+040010DEPÓSITO ESPECIAL                                 38
+040011RDC PRÉ-FIXADO                                    36
+040012RDC PÓS-FIXADO - TBF                              36
+040013RDC PÓS-FIXADO - TR                               36
+040014RDC C/ REAPLICAÇÃO AUTOMÁTICA                     36
+040015DEPÓSITO DE AVISO PRÉVIO - PRÉ 30                 37
+040016DEPÓSITO DE AVISO PRÉVIO - PRÉ 60                 37
+040017DEPÓSITO DE AVISO PRÉVIO - PRÉ 120                37
+040018DEPÓSITO DE AVISO PRÉVIO - PÓS TR                 37
+040019DEPÓSITO DE AVISO PRÉVIO - PÓS TBF                37
+040020RDC PÓS-FIXADO - CDI                              36
+040021DEPÓSITO DE AVISO PRÉVIO - PÓS CDI                37
+040022DEPÓSITO DE AVISO PRÉVIO - PRÉ 90                 37
+040023DEPOSITO DE AVISO PREVIO - PRE 181                37
+040024DEPOSITO DE AVISO PREVIO - PRE 361                37
+040025DEPOSITO DE AVISO PREVIO - PRE 721                37
+050001RATEIO DE VALORES                                 12
+060001FINANCIAMENTO RURAIS - RPL (TX ANO)               08
+060002FINANCIAMENTO RURAIS - RPL (TX MES)               08
+060003FINANCIAMENTOS RURAIS - REPASSE (TX ANO)          08
+060004FINANCIAMENTO RURAIS - REPASSE (TX MES)           08
+060005PREJUIZO                                          39
+060051PRODECOOP                                         08
+060052ARMAZEM                                           08
+060053FLORICULTURA                                      08
+060054PROCAMOL                                          08
+060055PRODAMEL                                          08
+060056PROFRUTA                                          08
+060057PRONAF                                            08
+060058PROPASTO                                          08
+060059PROSOLO                                           08
+060060CREDITO RURAL                                     08
+060061FUNCAFE CUSTEIO                                   08
+060062FUNCAFE COLHEITA                                  08
+060063FUNCAFE ESTOCAGEM                                 08
+060064PROGER EQUALIZAVEL                                08
+060065PRONAF C EQUALIZAVEL                              08
+060066PRONAF D EQUALIZAVEL                              08
+060067RECOOP                                            08
+060068RPL                                               08
+060069RPL COTAS PARTES                                  08
+060070CREDITO RURAL - SEM TX DE JUROS                   08
+060071REPASSES DA CENTRAL                               43
+060072TITULOS E CREDITO A RECEBER                       02
+060073CREDITO RURAL REPASSES DE OUTROS BANCOS           42
+060074REPASSES FUNCAFE - CENTRAL                        42
+060075SECURITIZAÇÃO                                     46
+060076PRONAF E EQUALIZAVEL                              08
+070001FINANCIAMENTOS                                    15
+070002EMPRESTIMOS                                       02
+070003PREJUIZO                                          39
+070051BNDES AUTOMATICO                                  02
+070052FINAME AGRICOLA ESPECIAL ANUAL                    02
+070053FINAME AGRICOLA ESPECIAL SEMESTRAL                02
+070054FINAME AGRICOLA PADRAO                            02
+070055FINAME FROTA ANUAL                                02
+070056FINAME FROTA SEMESTRAL                            02
+070057FINAME PADRAO                                     02
+070058FINAME PROLEITE                                   02
+070059CARTA DE FIANCA                                   02
+070060CREDITO PESSOAL                                   02
+070061CREDITO PESSOAL IRRF                              02
+070062REPES CDI                                         02
+070063REPES                                             02
+070064REPES CDI RENEGOCIACAO                            02
+070065REPES COTAS PARTES                                02
+070066REPES RECEBIVEIS                                  02
+070067REPRO                                             02
+070068REPRO BENS DURAVEIS                               02
+070069REPRO BENS DURAVEIS BANCOOB                       02
+070070REPRO BENS DURAVEIS SICOOB                        02
+070071EMPRESTIMOS - SEM TX DE JUROS                     02
+070072REPASSES DA CENTRAL                               43
+070073TITULOS E CREDITOS A RECEBER                      02
+070074RENEGOCIAÇÃO                                      02
+070075CREDITO PESSOAL BANCOOB CDI                       02
+070076CREDITO PESSOAL SICOOB CDI                        02
+070077REPES RENEGOCIACAO                                02
+070078REPES COTAS PARTES CDI                            02
+070079REPRO CDI                                         02
+070080REPRO BENS DURAVEIS CDI                           02
+070081REPRO BENS DURAVEIS BANCOOB CDI                   02
+070082REPRO BENS DURAVEIS SICOOB CDI                    02
+070083COOBRIGAÇÕES                                      45
+070084REPRO BENS DURAVEIS SICOOB - VEICULOS             15
+070085REPRO BENS DURAVEIS BANCOOB - VEICULOS            15
+070086CONSIGNAÇÃO FOLHA PAGAMENTO                       02
+070087REPES - ESPECIAL                                  02
+070089CONSIGNAÇÃO FOLHA PGTO CESSÃO                     02
+070090VENDOR                                            15
+070091COMPROR                                           15
+080001DESCONTO DE CHEQUES - PRÓPRIOS                    04
+080002DESCONTO DE NOTA PROMISSÓRIA                      03
+080003DESCONTO DE DUPLICATAS                            03
+080004DESCONTO DE DUPLICATAS RURAIS                     03
+080005DESCONTO DE NOTA PROMISSÓRIA RURAL                03
+080006PREJUIZO                                          39
+080007DESCONTO CHEQUE CURTO PRAZO                       04
+080008DESCONTO CHEQUE MÉDIO PRAZO                       04
+090001SIMPLES COM REGISTRO                              06
+090002SIMPLES SEM REGISTRO                              06
+090003CAUCIONADA                                        13
+090004VINCULADA                                         14
+090005CARNÊ DE PAGAMENTOS                               06
+090006INDEXADA                                          06
+090007RÁPIDA                                            06
+090008COBRANÇA CONTA CAPITAL                            06
+100001CONVÊNIO                                          10
+110001CARTÃO DE CRÉDITO                                 47
+120001INTERCREDIS                                       44
+130001CAIXA                                             09
+160001PAGAMENTO DE BENEFÍCIOS DO INSS                   41
+170001CONTROLES GERAIS                                  31
+190001CENTRALIZADOR DE CONVÊNIOS                        19
+210001POUPANÇA RURAL                                    48
+220001OPEN MARKET                                       57
+220002DEPÓSITO A PRAZO                                  57
+230001FUNDOS DE INVESTIMENTO                            58
