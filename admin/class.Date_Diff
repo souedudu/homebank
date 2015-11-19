@@ -1,0 +1,88 @@
+<?php
+
+/*
+ * Date Created: March 12, 2008 
+ * Create By: Frank Marcelo
+ * Please feel free to email me: frankitoy@gmail.com
+ * If you have problems
+ * first parameter show be greater than second parameter 
+ * dates should be in this format etc September 16, 2008 00:00:00 09/16/2008 01:01:01
+ *
+ */
+
+class Date_Diff
+{
+  var $dateFrom    ;
+  var $dateTo      ;
+  var $intDays    ;
+  var $intHours   ; 
+  var $intMinutes ;
+  var $sError     ;
+
+  function setDatas( $dateFrom , $dateTo )
+  {
+   $from = $this->isValidDate($dateFrom);
+   $to   = $this->isValidDate($dateTo); 
+
+    if( $from && $to )
+    { $this->setDate_Diff( $from , $to ); }
+  }
+
+  function getError()
+  {
+    return "Invalid date format from dateFrom or dateTo."; 
+  }
+
+   function setDate_Diff( $from = array() , $to = array() )
+  {
+   //$date1 = time();
+   //$date2 = mktime(0,0,0,02,29,2008);
+   //$dateDiff = $date1 - $date2;
+    $dateDiff = mktime( $from['hour']  , $from['minutes'] , $from['seconds'] , 
+                        $from['month'] , $from['day']     , $from['year'] ) -
+                mktime( $to['hour']    , $to['minutes']   , $to['seconds'] ,
+                        $to['month']   , $to['day']       , $to['year'] );
+    $this->intDays    = floor(  $dateDiff / (60*60*24) );
+    $this->intHours   = floor( ($dateDiff - ($this->intDays*60*60*24) ) / (60*60) );
+    $this->intMinutes = floor( ($dateDiff - ($this->intDays*60*60*24) - ($this->intHours*60*60) ) /60 );
+  }
+
+   function isValidDate( $sDate = "12/11/2008 00:00:00" )
+  {
+    $dateString = split( " "    , $sDate      );
+    $dateParts  = split( "[/-]" , $dateString[0] );
+    $dateParts2 = split( "[:]"  , $dateString[1] );
+
+    if( !checkdate($dateParts[1], $dateParts[0], $dateParts[2]) ) 
+    {  return false; }
+    return array
+           ( 
+             'day'     => $dateParts[0] ,
+             'month'   => $dateParts[1] , 
+             'year'    => $dateParts[2] ,
+             'hour'    => $dateParts2[0] ,
+             'minutes' => $dateParts2[1] ,
+             'seconds' => $dateParts2[2]
+           );
+  }
+
+  function getDiffInDays()
+  { return $this->intDays;    }
+
+  function getDiffInHours()
+  { return $this->intHours;   }
+  
+  function getDiffInMinutes()
+  { return $this->intMinutes; }
+
+  function __destruct()
+  {
+    unset($this->dateFrom);
+    unset($this->dateTo);
+    unset($this->intDays);
+    unset($this->intHours);
+    unset($this->intMinutes); 
+  }
+}
+
+?>

@@ -50,7 +50,6 @@ if ($bttipoacao != "")
 
   if ($bttipoacao == "Excluir")
 	$sql = SQL("menu","delete","", "codmenu");
-
   mysql_query($sql) or die(mysql_error());
 
 ?>
@@ -152,9 +151,9 @@ if ($_REQUEST['tipoacao'] == "Listar" || $_REQUEST['tipoacao'] == "")
 // Formulário para inclusão ou alteração dos dados
 if (($_REQUEST['tipoacao'] == "Incluir" || $_REQUEST['tipoacao'] == "Editar") && $bttipoacao == "")
 {
-  if ($codmenu != "")
+  if ($_REQUEST['codmenu'] != "")
   {
-     $sqlString = "Select * From menu where codmenu = ".$codmenu;
+     $sqlString = "Select * From menu where codmenu = ".$_REQUEST['codmenu'];
      $rsqry = mysql_query($sqlString);
      $rsmenu = mysql_fetch_array($rsqry);
   }
@@ -222,7 +221,7 @@ if (($_REQUEST['tipoacao'] == "Incluir" || $_REQUEST['tipoacao'] == "Editar") &&
     <td width="5">&nbsp;</td>
     <td align="right" width="150" class="td3"><b>Código Pai</b></td>
     <td class="td4" align="left">
-       &nbsp;<select size="1" name="codpaimenu">
+       &nbsp;<select size="1" name="codpaimenu" style="width:150">
                  <option value="">Selecione</option>
                  <option value="1" <? if ($rsmenu['codpaimenu']==1)
  								       echo "selected";

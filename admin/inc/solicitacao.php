@@ -6,7 +6,7 @@ Data Atualização: 30/11/2005 - Gelson
 Sistema: Home Bank
 Descrição: Cadastra Solicitação
 ************************************************************************************/
-//virtual('/homebank2/Connections/homebank_conecta.php');
+include('/homebank2/Connections/homebank_conecta.php');
   include_once("../library/config.php");
   include_once("../library/funcoes.php");
 $tipoacao = $_REQUEST['tipoacao'];

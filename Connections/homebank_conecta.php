@@ -6,5 +6,5 @@ $hostname_homebank_conecta = "localhost";
 $database_homebank_conecta = "homebank";
 $username_homebank_conecta = "root";
 $password_homebank_conecta = "";
-$homebank_conecta = mysql_pconnect($hostname_homebank_conecta, $username_homebank_conecta, $password_homebank_conecta) or trigger_error(mysql_error(),E_USER_ERROR); 
+$homebank_conecta = mysql_pconnect(conexao_host, conexao_user, conexao_pass) or trigger_error(mysql_error(),E_USER_ERROR); 
 ?>

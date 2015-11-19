@@ -31,14 +31,13 @@ if ($_REQUEST['bttipocao'] != "")
 {
 
   if ($bttipocao == "Incluir")
-	$sql = SQL("tecnicoresp", "insert", "codsetor,desfuncaoresp,nomtecnicoresp,desemailresp,numtelefoneresp,numramalresp");
+	 $sql = SQL("tecnicoresp", "insert", "nomtecnicoresp");
 
   elseif ($bttipocao == "Editar")
-	$sql = SQL("tecnicoresp", "update", "codsetor,desfuncaoresp,nomtecnicoresp,desemailresp,numtelefoneresp,numramalresp", "codtecnicoresp");
+	$sql = SQL("tecnicoresp", "update", "nomtecnicoresp", "codtecnicoresp");
 
   elseif ($bttipocao == "Excluir")
 	$sql = SQL("tecnicoresp", "delete", " ", "codtecnicoresp");
-	
   mysql_query($sql) or die(mysql_error());
 
 ?>
@@ -71,8 +70,7 @@ if ($_REQUEST['tipoacao'] == "")
 {
   $tipoacao = "Listar";
   
-  $sqlString = "Select t.*, s.dessetor From tecnicoresp t, setor s 
-                where t.codsetor = s.codsetor";
+  $sqlString = "Select * From tecnicoresp order by nomtecnicoresp";
 				 
   $rsqrytecnicoresp = mysql_query($sqlString);
   $rstecnicoresp = mysql_fetch_array($rsqrytecnicoresp);  	
@@ -82,40 +80,34 @@ if ($_REQUEST['tipoacao'] == "")
  <table width="580" border="0" cellspacing="2" cellpadding="1">
   <tr>
       <td width="5"></td>
-      <td align="center" class="td1">T&eacute;cnico Respons&aacute;vel </td>
+      <td align="center" class="td1">Procedimento/Fase </td>
   </tr> 
   <tr>
       <td width="5"></td>
-      <td align="left"><BR><a href="tecnicoresp.php?tipoacao=Incluir"><img src="img/Novo.gif" width="15" height="15" border="0" alt="Incluir novo registro." /></a> Incluir novo t&eacute;cnico </td>
+      <td align="left"><BR><a href="tecnicoresp.php?tipoacao=Incluir"><img src="img/Novo.gif" width="15" height="15" border="0" alt="Incluir novo registro." /></a> Incluir novo Tipo de  Serviço </td>
   </tr> 
 </table>
 <BR>
 <table width="580" border="0" cellspacing="0" cellpadding="0">
   <tr>
       <td width="5"></td>
-      <td width="281" class="td4"><strong>Nome </strong><br></td>
-      <td width="140" class="td4"><strong>Função </strong><br></td>
-      <td width="86" class="td4"><strong>Gerência </strong><br></td>
-	  <td width="63" class="td4" ><strong>Opções</strong><br></td>
+      <td  class="td4"><strong>Procedimento</strong><br></td>
+	  <td width="5" align="center" colspan="1" class="td4" ><strong>Opções</strong><br></td>
   </tr>   
-</table>
-<table width="580" border="0" cellspacing="0" cellpadding="0">
+
 <?
   while (!($rstecnicoresp==0))
   {
 ?> 
 
     <tr>
-      <td width="5"></td>
-      <td width="281" class="td3">&nbsp;<?=$rstecnicoresp['nomtecnicoresp'];?></td>
-      <td width="141" class="td3">&nbsp;<?=$rstecnicoresp['desfuncaoresp'];?></td>
-	  <td width="85" class="td3">&nbsp;<?=$rstecnicoresp['dessetor'];?></td>
-  	  <td width="32" align="center" class="td3">
+      <td ></td>
+      <td class="td3">&nbsp;<?=$rstecnicoresp['nomtecnicoresp'];?></td>
+  	  <td align="right" class="td3">
 	      <a href="tecnicoresp.php?tipoacao=Editar&codtecnicoresp=<?=$rstecnicoresp['codtecnicoresp'];?>">
 		     <img src="img/Editar.gif" width="15" height="15" border="0" alt="Editar o registro.">
           </a>
-      </td>
-	  <td width="29" align="center" class="td3">
+    
           <a href="tecnicoresp.php?tipoacao=Excluir&codtecnicoresp=<?=$rstecnicoresp['codtecnicoresp'];?>&bttipocao=Excluir">
 		       <img src="img/Excluir.gif" width="15" height="15" border="0" alt="Excluir o registro.">
           </a>
@@ -154,7 +146,7 @@ if (($_REQUEST['tipoacao'] == "Incluir" || $_REQUEST['tipoacao'] == "Editar") &&
 <table width="580" border="1" cellspacing="0" cellpadding="0">
   <tr>
     <td width="5"></td>
-    <td align="center" class="td1"><?=$tipoacao;?> T&eacute;cnico Respons&aacute;vel </td>
+    <td align="center" class="td1"><?=$tipoacao;?> Procedimento/Fase </td>
   </tr> 
 </table>
 <BR>
@@ -174,53 +166,10 @@ if (($_REQUEST['tipoacao'] == "Incluir" || $_REQUEST['tipoacao'] == "Editar") &&
 ?>
   <tr>
       <td width="5"></td>
-      <td align="right" width="110" class="td4">Nome do Técnico</td>
-	  <td class="td3">&nbsp;<input name="nomtecnicoresp" value="<?=$rstecnicoresp['nomtecnicoresp'];?>" type="text" id="nomtecnicoresp" size="70" /></td>
-  </tr> 
-  <tr>
-      <td width="5"></td>
-      <td align="right" width="110" class="td4">Gerência</td>
-	  <td class="td3">&nbsp;<select name="codsetor" id="codsetor">
-	           <option value="">Selecione</option> 
-        	  <? 
- 		        // Recupera os dados do setor
-                $sqlsetor = "select * from setor order by dessetor";
-                $qrysetor = mysql_query($sqlsetor) or die(mysql_error());			  
-			  
-			    while($b = mysql_fetch_array($qrysetor))
-			    { ?>
-       	  	       <option value="<?=$b['codsetor']?>" 
-				                  <? if ($b['codsetor']==$rstecnicoresp['codsetor'])
- 								       echo "selected";
-								  ?> 
-					>
-				      <?=$b['dessetor']?>
-				   </option>
-        	  <? } ?>
-             </select>      	  
-	 </td>
-  </tr> 
-  <tr>
-      <td width="5"></td>
-      <td align="right" width="110" class="td4">Função</td>
-	  <td class="td3">&nbsp;<input name="desfuncaoresp" value="<?=$rstecnicoresp['desfuncaoresp'];?>" type="text" id="desfuncaoresp" size="50" maxlength="100" /></td>
+      <td align="right" width="110" class="td4">Procedimento</td>
+	  <td class="td3"><input name="nomtecnicoresp" value="<?=$rstecnicoresp['nomtecnicoresp'];?>" type="text" id="tiposervico" size="55" /></td>
   </tr> 
   
-  <tr>
-      <td width="5"></td>
-      <td align="right" width="110" class="td4">E-Mail</td>
-	  <td class="td3">&nbsp;<input name="desemailresp" value="<?=$rstecnicoresp['desemailresp'];?>" type="text" id="desemailresp" size="60" maxlength="100" /></td>
-  </tr> 
-  <tr>
-      <td width="5"></td>
-      <td align="right" width="110" class="td4">Telefone</td>
-      <td class="td3">&nbsp;<input name="numtelefoneresp" value="<?=$rstecnicoresp['numtelefoneresp'];?>" type="text" id="numtelefoneresp" size="20" maxlength="100" /></td>
-  </tr>     
-  <tr>
-      <td width="5"></td>
-      <td align="right" width="110" class="td4">Ramal</td>
-      <td class="td3">&nbsp;<input name="numramalresp" value="<?=$rstecnicoresp['numramalresp'];?>" type="text" id="numramalresp" size="5" maxlength="100" /></td>
-  </tr>     
 </table>
 <table width="580" border="0" cellspacing="0" cellpadding="0">
     <tr><td>&nbsp;</td></tr>

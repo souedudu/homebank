@@ -14,11 +14,13 @@
 	text-decoration:none;
 	font-size:10px;
 }
-
+select{
+	width: 60%;
+}
 
 body,p,div,select,table,tr,th,td,input,textarea,.texto{
 	font-family:Verdana, Arial, Helvetica, sans-serif;
-	font-size:10px;
+	font-size:13px;
 	color:#000;
 	border:0px solid #606060;
 	cellspacing: 0px
@@ -33,13 +35,13 @@ body,p,div,select,table,tr,th,td,input,textarea,.texto{
 
 .td1{
     border:0px solid #606060;
-	background-color:#828916;
+	background-color:#007167;
 	color:#FFFFDD;
 	font-weight:bold;
 }
 .td2{
     border:0px solid #606060;
-    background-color: #828916;
+    background-color: #007167;
 	color:#F2F8E4;
 	font-weight:bold;
 }

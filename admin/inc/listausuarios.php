@@ -28,7 +28,7 @@ if ($_REQUEST['tipoacao'] == "" || $_REQUEST['tipoacao'] == "Listar"){
   <tr>
     <td width="5">&nbsp;</td>
     <td align="left">
-       <br><a href="old_cadastrausuario.php?tipoacao=Incluir"><img src="img/Novo.gif" width="15" height="15" border="0" alt="Incluir novo registro." /></a> Incluir novo registro<BR>
+       <br><a href="old_cadastrausuario.php?tipoacao=Incluir"><img src="img/Novo.gif" width="15" height="15" border="0" alt="Incluir novo registro." /></a> Incluir novo usuário<BR>
        <BR>
     </td>
   </tr>
@@ -61,7 +61,7 @@ if ($_REQUEST['tipoacao'] == "" || $_REQUEST['tipoacao'] == "Listar"){
 		     <img src="img/Editar.gif" width="15" height="15" border="0" alt="Editar o registro.">		  </a>
       <td width="30" align="center" class="td3">
           <a href="javascript:if(confirm('Tem certeza que deseja excluir o usuário <?=$rsusuario['desusuario'];?>')){ location.href='excluirusuario.php?cod=<?=$rsusuario['codusuario'];?>'; }">
-		       <img src="img/Excluir.gif" width="15" height="15" border="0" alt="Excluir o registro.">
+		       <img src="img/Excluir.gif" width="15" height="15" border="0" alt="Excluir o usuário.">
 		  </a>
 	  </td>
     </tr>

@@ -68,7 +68,7 @@ function VerificaCamposObrigatorios()
                  From solicitacaoserv s, cliente c, contacorrente cc, tiposervsolicitacao t
                  where s.dtconclusao is null  and  s.dtencerramento is null
 				   and s.flacancelada is null 
-                   and s.codtecnicoresp = ".$dados6['codtecnicoresp']."
+                   
                    and s.codcliente = c.codcliente and s.codcliente = cc.codcliente
                    and s.codtiposervsol = t.codtiposervsol
                  order by s.codsolicitacao, s.dtsolicitacao";

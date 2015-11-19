@@ -1,4 +1,5 @@
 <?php include_once('../Connections/homebank_conecta.php'); ?>
+<?php include_once('enviaemail.php'); ?>
 <?php
 function GetSQLValueString($theValue, $theType, $theDefinedValue = "", $theNotDefinedValue = "") 
 {
@@ -29,57 +30,67 @@ $editFormAction = $_SERVER['PHP_SELF'];
 if (isset($_SERVER['QUERY_STRING'])) {
   $editFormAction .= "?" . htmlentities($_SERVER['QUERY_STRING']);
 }
-
 if ((isset($_POST["MM_insert"])) && ($_POST["MM_insert"] == "form1")) {
-	
-	$sql="SELECT codcliente FROM contacorrente WHERE numcontacorrente=".$_POST['numcontacorrente'];
-	mysql_select_db($database_homebank_conecta, $homebank_conecta);
-	$Result = mysql_query($sql, $homebank_conecta) or die(mysql_error());
-	$conta = mysql_fetch_assoc($Result);
+  
+  $sql="SELECT codcliente FROM contacorrente WHERE numcontacorrente=".$_POST['numcontacorrente'];
+  mysql_select_db(conexao_db, $homebank_conecta);
+  $Result = @mysql_query($sql, $homebank_conecta);
+  $conta = @mysql_fetch_assoc($Result);
 
-	if(strstr($_REQUEST['tipoc'], "PRECAD"))
-		$_POST['numcontacorrente'] = 'p'.$_POST['numcontacorrente'];
-	
-  $insertSQL = sprintf("INSERT INTO solicitacaoserv (codtiposervsol, codtecnicoresp, dessolicitacao, desemailcont, numtelefonecont, dtsolicitacao, hrsolicitacao, numcontacorrente, tecnico_abertura, codcliente) VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s)",
-                       GetSQLValueString($_POST['codtiposervsol'], "int"),
-                       GetSQLValueString($_POST['codtecnicoresp'], "int"),
-                       GetSQLValueString($_POST['dessolicitacao'], "text"),
-                       GetSQLValueString($_POST['desemailcont'], "text"),
-                       GetSQLValueString($_POST['numtelefonecont'], "text"),
-                       GetSQLValueString($_POST['dtsolicitacao'], "date"),
-                       GetSQLValueString($_POST['hrsolicitacao'], "date"),
-                       GetSQLValueString($_POST['numcontacorrente'], "text"),
-                       GetSQLValueString($_SESSION['codusuarioadm'], "int"),
-                       GetSQLValueString($conta['codcliente'], "text"));
+  if(strstr($_REQUEST['tipoc'], "PRECAD"))
+    $_POST['numcontacorrente'] = 'p'.$_POST['numcontacorrente'];
 
-  mysql_select_db($database_homebank_conecta, $homebank_conecta);
-  $Result1 = mysql_query($insertSQL, $homebank_conecta) or die(mysql_error());
-
+    $insertSQL = "INSERT INTO solicitacaoserv (codtiposervsol, codtecnicoresp, dessolicitacao, desemailcont, numtelefonecont, dtsolicitacao, hrsolicitacao, numcontacorrente, tecnico_abertura, codcliente) VALUES (".GetSQLValueString($_POST['codtiposervsol'], "int").", ".GetSQLValueString($_POST['codtecnicoresp'], "int").", ".GetSQLValueString($_POST['dessolicitacao'], "text").", ".GetSQLValueString($_POST['desemailcont'], "text").", ".GetSQLValueString($_POST['numtelefonecont'], "text").", ".GetSQLValueString($_POST['dtsolicitacao'], "date").", ".GetSQLValueString($_POST['hrsolicitacao'], "date").", ".GetSQLValueString($_POST['numcontacorrente'], "text").", ".GetSQLValueString($_SESSION['codusuarioadm'], "int").", ".GetSQLValueString($conta['codcliente'], "text").")";
+  mysql_select_db(conexao_db, $homebank_conecta);
+  $Result1 = mysql_query($insertSQL, $homebank_conecta);
+  $id = mysql_insert_id($homebank_conecta);
+  if (!empty($_POST['numtelefonecont'])) $sql = "UPDATE cliente SET numdddtelefone='', numtelefone = '".$_POST['numtelefonecont']."' WHERE codcliente = ".$conta['codcliente']."; ";
+  mysql_query($sql, $homebank_conecta) or die(mysql_error());
   $insertGoTo = "index.php";
   if (isset($_SERVER['QUERY_STRING'])) {
     $insertGoTo .= (strpos($insertGoTo, '?')) ? "&" : "?";
     $insertGoTo .= $_SERVER['QUERY_STRING'];
   }
+  if($_POST['enviamensagem'] == '1'){
+    $EnviaEmail = new EnviaEmail();
+    $email = array();
+    $email['email'] = $_POST['desemailcont'];
+    $email['nomebusca'] = $_POST['nomebusca'];
+    $email['os'] = $id;
+    $email['texto'] = $_POST['dessolicitacao'];
+    // print_r($_SERVER);
+    $pg = split("/",$_SERVER['PHP_SELF']);
+    array_pop($pg);
+    $pg = implode('/', $pg) ;
+
+    $email['link'] = $_SERVER['HTTP_ORIGIN'].$pg.'/'."ver.php?cod=$id";
+    $EnviaEmail->emailAbertura($email);
+  }
+
   //header(sprintf("Location: %s", $insertGoTo));
   echo '<script language="JavaScript" type="text/javascript">
-location.href="ver.php?cod='.mysql_insert_id().'";
+location.href="ver.php?cod='.$id.'";
 </script>';
-
 }
 
-mysql_select_db($database_homebank_conecta, $homebank_conecta);
-$query_tipos = "SELECT CONCAT(tiposolicitacao.destiposol, ' - ',tiposervsolicitacao.destiposervsol) AS tipos, tiposervsolicitacao.codtiposervsol FROM tiposolicitacao, tiposervsolicitacao WHERE tiposervsolicitacao.codtiposol = tiposolicitacao.codtiposol ORDER BY tiposervsolicitacao.codtiposervsol";
+mysql_select_db(conexao_db, $homebank_conecta);
+$query_tipos = "SELECT destiposervsol AS tipos, codtiposervsol,codtiposol FROM  tiposervsolicitacao ORDER BY destiposervsol";
 $tipos = mysql_query($query_tipos, $homebank_conecta) or die(mysql_error());
 $row_tipos = mysql_fetch_assoc($tipos);
 $totalRows_tipos = mysql_num_rows($tipos);
 
-mysql_select_db($database_homebank_conecta, $homebank_conecta);
-$query_tecnico = "SELECT usuario.codtecnicoresp, usuario.desusuario FROM usuario ORDER BY usuario.desusuario";
+$query_produtos = "SELECT codtiposol,destiposol FROM tiposolicitacao ORDER BY destiposol";
+$produtos = mysql_query($query_produtos, $homebank_conecta) or die(mysql_error());
+$row_produtos = mysql_fetch_assoc($produtos);
+$totalRows_produtos = mysql_num_rows($produtos);
+
+mysql_select_db(conexao_db, $homebank_conecta);
+$query_tecnico = "SELECT `codtecnicoresp` , `nomtecnicoresp` FROM `tecnicoresp`  ORDER BY `nomtecnicoresp`";
 $tecnico = mysql_query($query_tecnico, $homebank_conecta) or die(mysql_error());
 $row_tecnico = mysql_fetch_assoc($tecnico);
 $totalRows_tecnico = mysql_num_rows($tecnico);
 
-mysql_select_db($database_homebank_conecta, $homebank_conecta);
+mysql_select_db(conexao_db, $homebank_conecta);
 $query_conta_cliente = "SELECT CONCAT(RIGHT(CONCAT('000000',contacorrente.numcontacorrente),6),' - ',cliente.nomcliente) AS cc_nome,contacorrente.numcontacorrente, cliente.codcliente FROM cliente, contacorrente WHERE contacorrente.codcliente=cliente.codcliente ORDER BY cliente.nomcliente";
 $conta_cliente = mysql_query($query_conta_cliente, $homebank_conecta) or die(mysql_error());
 $row_conta_cliente = mysql_fetch_assoc($conta_cliente);
@@ -122,7 +133,7 @@ function MM_validateForm() { //v4.0
  <table width="580" border="0" cellspacing="0" cellpadding="0" class="table">
   <tr>
     <td width="5">&nbsp;</td>
-    <td class="td2" align="center"><strong>Solicitação de Serviços Bancários </strong></td>
+    <td class="td2" align="center"><strong>Abrir nova Ordem de Serviço </strong></td>
   </tr> 
  </table> 
  <br>
@@ -132,51 +143,109 @@ function MM_validateForm() { //v4.0
 	<td class="td3">&nbsp;<?php echo $_SESSION['codusuarioadm'].' - '.$_SESSION['desusuario']; ?></td>
   </tr> 
   <tr>
-    <td>&nbsp;</td>
-    <td class="td4" align="right"><b>Buscar CC/Cliente </b></td>
+    <td height="32">&nbsp;</td>
+    <td class="td4" align="right"><b>Buscar CC/Associado </b></td>
     <td class="td3"><b>por</b> <select name="tipoBusca" id="tipoBusca" onchange="document.getElementById('nomebusca').value=''; formbusca()">
         <option value="NM">Nome</option>
         <option value="CC">Conta Corrente</option>
       </select><b>:</b> <input name="nomebusca" type="text" id="nomebusca" onkeyup="formbusca(this.value);" /></td>
   </tr>
-  <tr><td>&nbsp;</td>
-    <td align="right" valign="top" class="td4">CC/Cliente</td>
-	<td class="td3">
-		<div id="campocccliente">Busque um correntista...</div></td>
+  <tr><td height="28">&nbsp;</td>
+    <td align="right" valign="top" class="td4">CC/Associado</td>
+  <td class="td3">
+    <div id="campocccliente">Busque um correntista...</div></td>
   </tr>
-  <tr><td>&nbsp;</td>
-    <td class="td4" align="right">Tipo de Serviço</td>
-	 <td class="td3"><select name="codtiposervsol" id="codtiposervsol">
-	   <option value="">Selecione</option></option>
-	   <?php
+  <tr><td height="31">&nbsp;</td>
+    <td class="td4" align="right">Produtos</td>
+     <td class="td3">
+      <select name="produto" id="produto">
+        <option>Selecione</option></option>
+       <?php
 do {  
 ?>
-	   <option value="<?php echo $row_tipos['codtiposervsol']?>"><?php echo $row_tipos['tipos']?></option>
-	   <?php
+     <option value="<?php echo $row_produtos['codtiposol']?>"><?php echo $row_produtos['destiposol']?></option>
+     <?php
+} while ($row_produtos = mysql_fetch_assoc($produtos));
+  $rows = mysql_num_rows($produtos);
+  if($rows > 0) {
+      mysql_data_seek($produtos, 0);
+    $row_produtos = mysql_fetch_assoc($produtos);
+  }
+?>   
+      </select>
+     </td>
+  </tr>
+  <tr><td height="31">&nbsp;</td>
+    <td class="td4" align="right">Tipo de Serviço</td>
+     <td class="td3">
+      <select name="codtiposervsol" id="codtiposervsol" >
+        <option value="">Selecione</option></option>
+        <?php
+do {  
+?>
+     <option  value="<?php echo $row_tipos['codtiposervsol']?>"><?php echo $row_tipos['tipos']?></option>
+     <?php
 } while ($row_tipos = mysql_fetch_assoc($tipos));
   $rows = mysql_num_rows($tipos);
   if($rows > 0) {
       mysql_data_seek($tipos, 0);
-	  $row_tipos = mysql_fetch_assoc($tipos);
+    $row_tipos = mysql_fetch_assoc($tipos);
   }
+?>   
+      </select>
+      <select class="notchosen" id="codtiposervsol2" >
+	      <option value="">Selecione</option></option>
+        <?php
+do {  
 ?>
-             </select></td>
-  </tr> 
-
+     <option class='produto<?php echo $row_tipos['codtiposol']?>' value="<?php echo $row_tipos['codtiposervsol']?>"><?php echo $row_tipos['tipos']?></option>
+     <?php
+} while ($row_tipos = mysql_fetch_assoc($tipos));
+  $rows = mysql_num_rows($tipos);
+  if($rows > 0) {
+      mysql_data_seek($tipos, 0);
+    $row_tipos = mysql_fetch_assoc($tipos);
+  }
+?>   
+      </select>
+     </td>
+  </tr>
+  <script type="text/javascript">
+  $('#codtiposervsol2 option').hide();
+  $('#codtiposervsol2').hide();
+  $(function() {
+    $('#produto').change(function(event) {
+      /* Act on the event */
+      $('#codtiposervsol2 option').hide();
+      var id = $(this).val();
+      $('.produto'+id).show();
+      var $clone = $('#codtiposervsol2').clone().show().attr({
+        id: 'codtiposervsol',
+        name: 'codtiposervsol'
+      });;
+      $('#codtiposervsol').parent().find('.chosen-container').remove();
+      $('#codtiposervsol').remove();
+      $($clone).insertBefore( $('#codtiposervsol2') );
+      $('#codtiposervsol').chosen();
+    });
+    
+  });
+  </script>
   <tr><td>&nbsp;</td>
     <td class="td4" align="right">Detalhes da solicitação<br><br><br><br><br><br></td>
 	   <td class="td3">&nbsp;<textarea style='width:415px; height:75px' name='dessolicitacao'></textarea>	   </td>
   </tr> 
+ 
+  <tr><td height="33">&nbsp;</td>
+    <td class="td4" align="right">Procedimento/Fase</td>
 
-  <tr><td>&nbsp;</td>
-    <td class="td4" align="right">Técnico responsável</td>
-
-	 <td class="td3">&nbsp;<select name="codtecnicoresp" id="codtecnicoresp">
+	 <td class="td3">
+    <select name="codtecnicoresp" id="codtecnicoresp">
 	   <option value="">Selecione</option>
 	   <?php
 do {  
 ?>
-	   <option value="<?php echo $row_tecnico['codtecnicoresp']?>"><?php echo $row_tecnico['desusuario']?></option>
+	   <option value="<?php echo $row_tecnico['codtecnicoresp']?>" ><?php echo $row_tecnico['nomtecnicoresp']?></option>
 	   <?php
 } while ($row_tecnico = mysql_fetch_assoc($tecnico));
   $rows = mysql_num_rows($tecnico);
@@ -188,14 +257,24 @@ do {
       </select></td>	
   </tr> 
  
-   <tr><td>&nbsp;</td>
-    <td class="td4" align="right">E-Mail de contato</td>
-	   <td class="td3">&nbsp;<input name="desemailcont" type="text" id="desemailcont" size="50" maxlength="60">	   </td>
+  <tr>
+    <td height="33">&nbsp;</td>
+    <td class="td4" align="right">Enviar Mensagem de e-mail?</td>
+	  <td class="td3">
+      &nbsp;<input name="enviamensagem" type="checkbox" value='1'>
+    </td>
+  </tr>
+  <tr>
+    <td height="35">&nbsp;</td>
+    <td class="td4" align="right">&nbsp;E-Mail de contato</td>
+    <td class="td3">
+      <input name="desemailcont" type="text" id="desemailcont" size="50" maxlength="60">
+    </td>
   </tr>
 
-   <tr><td>&nbsp;</td>
+   <tr><td height="36">&nbsp;</td>
     <td class="td4" align="right">Telefone de contato</td>
-	   <td class="td3">&nbsp;<input name="numtelefonecont" type="text" id="numtelefonecont" size="15" maxlength="15">	   </td>
+	   <td class="td3"><input name="numtelefonecont" type="text" id="numtelefonecont" size="45" maxlength="45">	   </td>
   </tr>
  </table>
 

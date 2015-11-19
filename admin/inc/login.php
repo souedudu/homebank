@@ -1,9 +1,6 @@
 <?
-session_start();
-session_unset();
-session_destroy();
 ?><head>
-<title>:. HOMEBANKING .:</title>
+<title>:. Sistema de OS Sicoob .:</title>
 <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
 <link href="site.css" rel="stylesheet" type="text/css">
 </head>
@@ -22,7 +19,7 @@ session_destroy();
             <td>&nbsp;</td>
         </tr>
         <tr>
-            <td colspan="2" align="center"><font color="#A2A251">&nbsp;<b>Administrador</b></font></td>
+            <td colspan="2" align="center"><font color="#A2A251">&nbsp;<b></b></font></td>
             <td>&nbsp;</td>
         </tr>
         <tr class="td2">

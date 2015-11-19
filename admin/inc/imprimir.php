@@ -1,4 +1,4 @@
-<?php virtual('/homebank2/Connections/homebank_conecta.php'); ?>
+<?php @include_once("../../Connections/homebank_conecta.php"); ?>
 <?php
 if (!function_exists("GetSQLValueString")) {
 function GetSQLValueString($theValue, $theType, $theDefinedValue = "", $theNotDefinedValue = "") 

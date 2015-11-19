@@ -282,7 +282,7 @@ if (($_REQUEST['tipoacao'] == "Incluir" || $_REQUEST['tipoacao'] == "Editar") &&
  		            // Recupera os dados do tecnico			
 					if ($tipoacao == "Incluir")
 					{
-                       $sqlstring2 = "SELECT t.* FROM tecnicoresp t LEFT JOIN usuario u ON t.codtecnicoresp = u.codtecnicoresp
+                      echo  $sqlstring2 = "SELECT t.* FROM tecnicoresp t LEFT JOIN usuario u ON t.codtecnicoresp = u.codtecnicoresp
                                    where u.codtecnicoresp IS NULL
   								  order by t.nomtecnicoresp  ";
 					}
@@ -314,13 +314,13 @@ if (($_REQUEST['tipoacao'] == "Incluir" || $_REQUEST['tipoacao'] == "Editar") &&
   <tr>
 	 <td width="5">&nbsp;&nbsp;</td>
      <td class="td3"  width="200" align="right" >Login</td>
-	 <td class="td4">&nbsp;<input name="desusuariologin" value="<?=$rsusuario['desusuario'];?>" type="text" id="desusuariologin" size="20" maxlength="15" />
+	 <td class="td4">&nbsp;<input name="desusuariologin" value="<?=@$rsusuario['desusuario'];?>" type="text" id="desusuariologin" size="20" maxlength="15" />
       <br></td>
   </tr>
   <tr>
      <td width="5">&nbsp;</td>
      <td align="right" width="200" class="td3">Senha</td>
-    <td class="td4">&nbsp;<input name="dessenha" value="<?=$rsusuario['dessenha'];?>" type="password" id="dessenha" size="10" maxlength="8" /></td>
+    <td class="td4">&nbsp;<input name="dessenha" value="<?=@$rsusuario['dessenha'];?>" type="password" id="dessenha" size="10" maxlength="8" /></td>
   </tr>
 
 </table>
@@ -329,14 +329,14 @@ if (($_REQUEST['tipoacao'] == "Incluir" || $_REQUEST['tipoacao'] == "Editar") &&
   <tr>
      <td  width="5">&nbsp;</td>
 	 <td align="right" width="200" class="td3">Permitir Cadastrar Usuários</td>
-	 <td class="td4">&nbsp;<select size="1" name="flapercadusu" id="flapercadusu">
+	 <td class="td4">&nbsp;<select size="1" name="flapercadusu" id="flapercadusu" style="width:120">
               <option value="">Selecione</option>
               <option value="s"
-				                  <? if ($rsusuario['flapercadusu'] =="s")
+				                  <? if (@$rsusuario['flapercadusu'] =="s")
  								       echo "selected";
 								  ?> 			  >Sim</option>
               <option value="n"
-				                  <? if ($rsusuario['flapercadusu'] =="n")
+				                  <? if (@$rsusuario['flapercadusu'] =="n")
  								       echo "selected";
 								  ?>			  >Não</option>
           </select>			  
@@ -345,14 +345,14 @@ if (($_REQUEST['tipoacao'] == "Incluir" || $_REQUEST['tipoacao'] == "Editar") &&
   <tr>
      <td  width="5">&nbsp;</td>
 	 <td align="right" width="200" class="td3">Permitir Cadastrar Menu</td>
-	 <td class="td4">&nbsp;<select size="1" name="flapercadmenu" id="flapercadmenu">
+	 <td class="td4">&nbsp;<select size="1" name="flapercadmenu" id="flapercadmenu" style="width:120">
               <option value="">Selecione</option>
               <option value="s"
-				                  <? if ($rsusuario['flapercadmenu'] =="s")
+				                  <? if (@$rsusuario['flapercadmenu'] =="s")
  								       echo "selected";
 								  ?> 			  >Sim</option>
               <option value="n"
-				                  <? if ($rsusuario['flapercadmenu'] =="n")
+				                  <? if (@$rsusuario['flapercadmenu'] =="n")
  								       echo "selected";
 								  ?>			  >Não</option>
           </select>

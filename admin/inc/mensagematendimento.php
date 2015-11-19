@@ -1,23 +1,23 @@
 <?
 /********************************************************************************
 Autor: Gelson
-Data Criação: 
-Data Atualização: 29/11/2005 - Gelson
+Data CriaÃ§Ã£o: 
+Data AtualizaÃ§Ã£o: 29/11/2005 - Gelson
 Sistema: Home Bank
-Descrição: Cadastra Mensagem de atendimento
+DescriÃ§Ã£o: Cadastra Mensagem de atendimento
 ************************************************************************************/
 
-// Abre conexão com o bd
+// Abre conexÃ£o com o bd
 $achou = Conexao($opcao='open',conexao_host,conexao_user,conexao_pass,conexao_db);
 ?>
 
 <script language=javascript>
 function VerificaCamposObrigatorios()
 {
-  if (document.form.desmenatendimento.value =='')
+  if (document.form.desmenatendimentoeditar.value =='')
   {
-    alert('Campo descrição obrigatório.');
-    document.form.desmenatendimento.focus();
+    alert('Campo descriÃ§Ã£o obrigatÃ³rio.');
+    document.form.desmenatendimentoeditar.focus();
     return false;
   }
 
@@ -25,18 +25,23 @@ function VerificaCamposObrigatorios()
 </script>
 
 <?
+$desmenatendimento = $desmenatendimentoeditar;
+if ($negrito == 's') $desmenatendimento = "<b>".$desmenatendimento."</b>";
+
+$desmenatendimento = "<font color='$cor'>".$desmenatendimento."</font>";
+$_REQUEST['desmenatendimento'] = $desmenatendimento;
 // Grava dados do formulario
 if ($bttipoacao != "")
 {
   if ($bttipoacao == "Incluir")
-	$sql = SQL("mensatendimento", "insert", "codmenatendimento,desmenatendimento");
+	 $sql = SQL("mensatendimento", "insert", "desmenatendimento,desmenatendimentoeditar,cor,negrito");
 
   if ($bttipoacao == "Editar")
-	$sql = SQL("mensatendimento", "update", "desmenatendimento", "codmenatendimento");
+	 $sql = SQL("mensatendimento", "update", "desmenatendimento,desmenatendimentoeditar,cor,negrito", "codmenatendimento");
 
   if ($bttipoacao == "Excluir")
 	$sql = SQL("mensatendimento","delete","", "codmenatendimento");
-
+// echo $sql;
   mysql_query($sql) or die(mysql_error());
 
 ?>
@@ -52,7 +57,7 @@ if ($bttipoacao != "")
   </tr>
   <tr>
     <td width="5">&nbsp;</td>
-    <td align='center' class="td4"><br>Operação efetuada com sucesso.<p> </td>
+    <td align='center' class="td4"><br>OperaÃ§Ã£o efetuada com sucesso.<p> </td>
   </tr>
 </table>
  <p>
@@ -66,12 +71,26 @@ if ($bttipoacao != "")
    
 <?
 }
-// Lista dados que estão cadastrados na tabela
+// Lista dados que estÃ£o cadastrados na tabela
 if ($_REQUEST['tipoacao'] == "")
 {
   $tipoacao = "Listar";
   
-  $sqlString = "Select * From mensatendimento";
+
+  $sqlString = "Select * From mensatendimento order by desmenatendimentoeditar";
+  $rsqrymens = mysql_query($sqlString);
+  $rsmensagem = mysql_fetch_array($rsqrymens);    
+  
+  while (!($rsmensagem==0))
+  {
+
+    $sql_update = "update mensatendimento set desmenatendimentoeditar = '".strip_tags($rsmensagem['desmenatendimentoeditar'])."' where codmenatendimento=".$rsmensagem['codmenatendimento'];
+    mysql_query($sql_update);
+    $rsmensagem = mysql_fetch_array($rsqrymens);
+  }
+
+
+  $sqlString = "Select * From mensatendimento order by desmenatendimentoeditar";
   $rsqrymens = mysql_query($sqlString);
   $rsmensagem = mysql_fetch_array($rsqrymens);  	
   
@@ -93,8 +112,8 @@ if ($_REQUEST['tipoacao'] == "")
 <table width="580" border="1" cellspacing="0" cellpadding="0">
   <tr>
     <td width="5"></td>
-    <td class="td4"><strong>&nbsp;Descrição</strong><br></td>
-	<td width="70" align="center" class="td4"><strong>Opções</strong><br></td>
+    <td class="td4"><strong>&nbsp;DescriÃ§Ã£o</strong><br></td>
+	<td width="70" align="center" class="td4"><strong>OpÃ§Ãµes</strong><br></td>
   </tr>   
   </table>
   
@@ -132,7 +151,7 @@ if ($_REQUEST['tipoacao'] == "")
 <?
 }  
 
-// Formulário para inclusão ou alteração dos dados
+// FormulÃ¡rio para inclusÃ£o ou alteraÃ§Ã£o dos dados
 if (($_REQUEST['tipoacao'] == "Incluir" || $_REQUEST['tipoacao'] == "Editar") && $bttipoacao == "")
 {
   if ($codmenatendimento != "")
@@ -160,15 +179,41 @@ if (($_REQUEST['tipoacao'] == "Incluir" || $_REQUEST['tipoacao'] == "Editar") &&
   {
 ?>
   <tr>
-     <td align="right" width="60" class="td4">Código</td>
+     <td align="right" width="60" class="td4">CÃ³digo</td>
 	 <td class="td3">&nbsp;<?=$codmenatendimento;?><br></td>
   </tr>
 <?
   }
 ?>
   <tr>
-    <td align="right" width="60" class="td4">Descrição</td>
-	 <td class="td3">&nbsp;<input name="desmenatendimento" value="<?=$rsmensagem['desmenatendimento'];?>" type="text" id="desmenatendimento" size="60" maxlength="100" /></td>
+    <td align="right" width="60" class="td4">DescriÃ§Ã£o</td>
+   <td class="td3">&nbsp;<input name="desmenatendimentoeditar" value="<?=strip_tags($rsmensagem['desmenatendimentoeditar']);?>" type="text" id="desmenatendimentoeditar" size="60" maxlength="100" /></td>
+  </tr>
+  <tr>
+    <td align="right" width="60" class="td4">Cor</td>
+    <td class="td3">&nbsp;<input type="text" name="cor" id="cor" data-format="hex" class="demo1" value="<?=$rsmensagem['cor'];?>" />
+    <script>
+    $(function(){
+        $('.demo1').colorpicker({
+      colorSelectors: {
+        'default': '#777777',
+        'primary': '#337ab7',
+        'success': '#5cb85c',
+        'info': '#5bc0de',
+        'warning': '#f0ad4e',
+        'danger': '#d9534f'
+      }
+    });
+    });
+</script>
+
+  </td>
+  <tr>
+    <td align="right" width="60" class="td4">Negrito?</td>
+	  <td class="td3">&nbsp;
+    <input type="checkbox" name="negrito" id="negrito" value="s" <?php if ($rsmensagem['negrito']=='s') echo "checked" ?> >
+   
+  </td>
   </tr> 
 </table>
  
@@ -187,6 +232,7 @@ if (($_REQUEST['tipoacao'] == "Incluir" || $_REQUEST['tipoacao'] == "Editar") &&
 
  </table> 
 </form>
+
 <?
 }
 ?>

@@ -1,4 +1,5 @@
-<?php virtual('/homebank2/Connections/homebank_conecta.php'); ?>
+<?php virtual('../library/config.php'); ?>
+<?php virtual('../Connections/homebank_conecta.php'); ?>
 <?php
 function GetSQLValueString($theValue, $theType, $theDefinedValue = "", $theNotDefinedValue = "") 
 {
@@ -29,7 +30,7 @@ if ((isset($_GET['cod'])) && ($_GET['cod'] != "")) {
   $deleteSQL = sprintf("DELETE FROM usuario WHERE codusuario=%s",
                        GetSQLValueString($_GET['cod'], "int"));
 
-  mysql_select_db($database_homebank_conecta, $homebank_conecta);
+  mysql_select_db(conexao_db, $homebank_conecta);
   $Result1 = mysql_query($deleteSQL, $homebank_conecta) or die(mysql_error());
 }
 
@@ -37,7 +38,7 @@ if ((isset($_GET['cod'])) && ($_GET['cod'] != "")) {
   $deleteSQL = sprintf("DELETE FROM acessousu WHERE codusuario=%s",
                        GetSQLValueString($_GET['cod'], "int"));
 
-  mysql_select_db($database_homebank_conecta, $homebank_conecta);
+  mysql_select_db(conexao_db, $homebank_conecta);
   $Result1 = mysql_query($deleteSQL, $homebank_conecta) or die(mysql_error());
 }
 ?>

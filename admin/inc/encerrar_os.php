@@ -2,6 +2,7 @@
 session_start();
 include_once("../Connections/homebank_conecta.php");
 require_once "auth.php";
+include_once('enviaemail.php');
 verificaAuth($_SESSION['codusuarioadm'], 'Concluir OS');
 
 if (!function_exists("GetSQLValueString")) {
@@ -40,13 +41,58 @@ if (isset($_SERVER['QUERY_STRING'])) {
 }
 
 if ((isset($_POST["MM_insert"])) && ($_POST["MM_insert"] == "formINC")) {
-  $insertSQL = sprintf("INSERT INTO andamensolicitacao (codsolicitacao, codmenatendimento, codtecnicoresp, descompmensagem, datregandamento, hrregandamento, final) VALUES (%s, %s, %s, %s, %s, %s, 1)",
-                       GetSQLValueString($_POST['codsolicitacao'], "int"),
-                       GetSQLValueString($_POST['codmenatendimento'], "int"),
-                       GetSQLValueString($_POST['codtecnicoresp'], "int"),
-                       GetSQLValueString($_POST['descompmensagem'], "text"),
-                       GetSQLValueString($_POST['datregandamento'], "date"),
-                       GetSQLValueString($_POST['hrregandamento'], "date"));
+    
+
+  mysql_select_db(conexao_db, $homebank_conecta);
+  $query_solicitacao = sprintf("SELECT distinct(s.codsolicitacao),
+  DATE_FORMAT(s.dtsolicitacao, '%%d/%%m/%%Y' ) AS data_solicitacao,
+  DATE_FORMAT(s.hrsolicitacao, '%%H:%%i:%%s' ) AS hora_solicitacao,
+  s.numcontacorrente,
+  u.desusuario AS tecnico_abertura,
+  cl.nomcliente,
+  t.destiposervsol,
+  s.codtecnicoresp,
+  s.dessolicitacao,
+  IF( s.dtconclusao IS NULL , 'Solicitação ainda não concluída', DATE_FORMAT( s.dtconclusao, '%%d/%%m/%%Y' ) ) AS data_conclusao,
+  cl.numcpfcnpj,
+  IF( s.dtconclusao IS NOT NULL,'S','N') AS concluida,
+  s.desemailcont,
+  s.numtelefonecont,ts.destiposol as desproduto,
+  tr.nomtecnicoresp AS nomtecnicoresp
+  FROM solicitacaoserv s LEFT OUTER JOIN
+  contacorrente c ON  c.numcontacorrente=s.numcontacorrente LEFT OUTER JOIN
+  cliente cl ON c.codcliente=cl.codcliente LEFT OUTER JOIN
+  tiposervsolicitacao t ON s.codtiposervsol=t.codtiposervsol LEFT OUTER JOIN
+  usuario u ON s.tecnico_abertura=u.codusuario LEFT OUTER JOIN
+  tecnicoresp tr ON s.codtecnicoresp = tr.codtecnicoresp LEFT OUTER JOIN tiposolicitacao ts ON ts.codtiposol = t.codtiposol
+  WHERE s.codsolicitacao =%s
+  group by s.codsolicitacao
+  ", GetSQLValueString($_REQUEST['codsolicitacao'], "int"));
+  $solicitacao = mysql_query($query_solicitacao, $homebank_conecta) or die(mysql_error());
+  $row_solicitacao = mysql_fetch_assoc($solicitacao);
+
+
+  $EnviaEmail = new EnviaEmail();
+  $email = array();
+  $email['email'] = $row_solicitacao['desemailcont'];
+  $email['nomebusca'] = $row_solicitacao['nomcliente'];
+  $email['os'] = $_REQUEST['codsolicitacao'];
+  // print_r($_SERVER);
+  $pg = split("/",$_SERVER['PHP_SELF']);
+  array_pop($pg);
+  $pg = implode('/', $pg) ;
+
+  $email['link'] = "http://www.crediembrapa.com.br".$pg.'/inc/'."avaliaratendimento.php?codsolicitacao=".$_REQUEST['codsolicitacao'];
+  $EnviaEmail->emailAvaliacao($email);
+
+  $insertSQL = "INSERT INTO andamensolicitacao (codsolicitacao, codmenatendimento, codtecnicoresp, descompmensagem, datregandamento, hrregandamento, final) 
+                  VALUES (".GetSQLValueString($_POST['codsolicitacao'], "int").", 
+                          ".GetSQLValueString($_POST['codmenatendimento'], "int").", 
+                          ".GetSQLValueString($_POST['codtecnicoresp'], "int").", 
+                          ".GetSQLValueString($_POST['descompmensagem'], "text").", 
+                          ".GetSQLValueString($_POST['datregandamento'], "date").", 
+                          ".GetSQLValueString($_POST['hrregandamento'], "date").", 
+                          1)";
 
   mysql_select_db($database_homebank_conecta, $homebank_conecta)or die(mysql_error());
 //	echo $insertSQL;
@@ -110,7 +156,7 @@ function MM_validateForm() { //v4.0
 <table align="center">
   <form method="post" name="formINC" action="<?php echo $editFormAction; ?>">
     <tr valign="baseline">
-      <td align="left" nowrap>Mensagem de atendimento:<br />
+      <td align="left" nowrap>Insira uma mensagem de conclusão:<br><br />
           <select name="codmenatendimento">
             <?php 
 do {  
@@ -119,14 +165,14 @@ do {
             <?php
 } while ($row_mensagens = mysql_fetch_assoc($mensagens));
 ?>
-          </select>
+          </select><br><br>
           <input type="hidden" name="codtecnicoresp" id="codtecnicoresp" value="<?php echo $_SESSION['codtecnicorespadm'];?>" /></td>
     <tr valign="baseline">
       <td align="left" valign="top" nowrap><textarea name="descompmensagem" cols="50" rows="5"></textarea>
       </td>
     </tr>
     <tr valign="baseline">
-      <td align="center" nowrap><input name="submit" type="submit" value="Concluir OS" onClick="MM_validateForm('descompmensagem','','R');return document.MM_returnValue; return confirm('Voc&ecirc; tem certeza que deseja realmente concluir esta OS?');">
+      <td align="center" nowrap><input name="submit" type="submit" value="Concluir OS" onClick="MM_validateForm('descompmensagem','','R');return document.MM_returnValue; return confirm('Voc&ecirc; tem certeza que deseja realmente concluir esta O.S.?');">
           <input type="hidden" name="codsolicitacao" value="<?php echo $_GET['cod']; ?>" />
           <input type="hidden" name="datregandamento" value="<?php echo date('Y-m-d');?>" />
           <input type="hidden" name="hrregandamento" value="<?php echo date('H:i');?>" />

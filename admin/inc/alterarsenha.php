@@ -1,4 +1,4 @@
-<?php virtual('/homebank2/Connections/homebank_conecta.php'); ?>
+<?php include('../Connections/homebank_conecta.php'); ?>
 <?php
 function GetSQLValueString($theValue, $theType, $theDefinedValue = "", $theNotDefinedValue = "") 
 {
@@ -35,7 +35,7 @@ if ((isset($_POST["MM_update"])) && ($_POST["MM_update"] == "form1")) {
                        GetSQLValueString($_POST['dessenha'], "text"),
                        GetSQLValueString($_POST['cod'], "int"));
 
-  mysql_select_db($database_homebank_conecta, $homebank_conecta);
+  mysql_select_db(conexao_db, $homebank_conecta);
   $Result1 = mysql_query($updateSQL, $homebank_conecta) or die(mysql_error());
 
   $updateGoTo = "/homebank2/admin/index.php";
@@ -55,7 +55,7 @@ $colname_usuario = "-1";
 if (isset($_SESSION['codusuarioadm'])) {
   $colname_usuario = (get_magic_quotes_gpc()) ? $_SESSION['codusuarioadm'] : addslashes($_SESSION['codusuarioadm']);
 }
-mysql_select_db($database_homebank_conecta, $homebank_conecta);
+mysql_select_db(conexao_db, $homebank_conecta);
 $query_usuario = sprintf("SELECT codusuario, desusuario, dessenha FROM usuario WHERE codusuario = %s", $colname_usuario);
 $usuario = mysql_query($query_usuario, $homebank_conecta) or die(mysql_error());
 $row_usuario = mysql_fetch_assoc($usuario);
@@ -68,24 +68,25 @@ $totalRows_usuario = mysql_num_rows($usuario);
 <script language=javascript>
 function VerificaCamposObrigatorios()
 {
-  if (document.form.desusuario.value =='')
+  if (document.form1.desusuario.value =='')
   {
-    alert('Campo Nome obrigatório.');
-    document.form.desusuario.focus();
+    alert('Campo Nome obrigatÃ³rio.');
+    document.form1.desusuario.focus();
     return false;
   }
-  if (document.form.dessenha.value =='')
+  if (document.form1.dessenha.value =='')
   {
-    alert('Campo Senha obrigatório.');
-    document.form.dessenha.focus();
+    alert('Campo Senha obrigatÃ³rio.');
+    document.form1.dessenha.focus();
     return false;
   }
-  if (document.form.desfuncao.value =='')
+  if (document.form1.dessenha.value !=document.form1.confdessenha.value)
   {
-    alert('Campo Função obrigatório.');
-    document.form.desfuncao.focus();
+    alert('As Senhas estÃ£o diferentes.');
+    document.form1.dessenha.focus();
     return false;
   }
+  
 
 
 }
@@ -115,6 +116,12 @@ function VerificaCamposObrigatorios()
         <input name="dessenha" type="password" id="dessenha" value="<?php echo $row_usuario['dessenha']; ?>" size="10" maxlength="8" />
       <input name="cod" type="hidden" id="cod" value="<?php echo $row_usuario['codusuario']; ?>" /></td>
   </tr>
+  <tr>
+    <td width="5"></td>
+    <td align="right" width="80" class="td3">Confirmar Senha</td>
+    <td class="td4">&nbsp;
+        <input name="confdessenha" type="password" id="confdessenha" value="<?php echo $row_usuario['dessenha']; ?>" size="10" maxlength="8" />
+  </tr>
 </table>
 <table width="580" class="table" cellspacing="0" cellpadding="0">
   <tr>
@@ -125,7 +132,7 @@ function VerificaCamposObrigatorios()
   </tr>
   <tr>
     <td width="200">&nbsp;</td>
-	 <td  width="80"><input type="submit" name="Submit" value="Gravar" /></td>
+	 <td  width="80"><input type="submit" name="Submit" value="Gravar" onclick="return VerificaCamposObrigatorios()" /></td>
     <td><input name="button" type="button" onclick="javascript:(history.back(-1))" value="Cancelar" /></td>
   </tr>
 </table>

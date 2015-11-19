@@ -71,7 +71,7 @@ if ($_REQUEST['tipoacao'] == "")
 {
   $tipoacao = "Listar";
   
-  $sqlString = "Select * From tiposolicitacao";
+  $sqlString = "Select * From tiposolicitacao order by destiposol";
   $rsqry = mysql_query($sqlString);
   $rstiposolicitacao = mysql_fetch_array($rsqry);  	
   
@@ -80,7 +80,7 @@ if ($_REQUEST['tipoacao'] == "")
  <table width="580" border="1" cellspacing="0" cellpadding="0">
   <tr>
       <td width="5"></td>
-      <td align="center" class="td1"><strong>Tipo de Solicitação</td>
+      <td align="center" class="td1"><strong>Cadastro de Produto</td>
   </tr> 
   <tr>
       <td width="5"></td>
@@ -92,7 +92,7 @@ if ($_REQUEST['tipoacao'] == "")
 <table width="580" border="1" cellspacing="0" cellpadding="0">
   <tr>
     <td width="5"></td>
-    <td class="td4"><strong>&nbsp;Descrição</strong><br></td>
+    <td class="td4"><strong>&nbsp;Produto</strong><br></td>
 	<td width="70" align="center" class="td4"><strong>Opções</strong><br></td>
   </tr>   
 </table>
@@ -147,7 +147,7 @@ if (($_REQUEST['tipoacao'] == "Incluir" || $_REQUEST['tipoacao'] == "Editar") &&
 <table width="580" border="1" cellspacing="0" cellpadding="0">
   <tr>
     <td width="5"></td>
-    <td align="center" class="td1"><strong><b><?=$tipoacao;?> Tipo de Solicitação </b></strong></td>
+    <td align="center" class="td1"><strong><b><?=$tipoacao;?> Produto </b></strong></td>
   </tr> 
 </table>
 <BR>
@@ -166,7 +166,7 @@ if (($_REQUEST['tipoacao'] == "Incluir" || $_REQUEST['tipoacao'] == "Editar") &&
 ?>
   <tr>
       <td width="5"></td>
-      <td align="right" width="60" class="td4">Descrição</td>
+      <td align="right" width="60" class="td4">Produto</td>
 	  <td class="td3">&nbsp;<input name="destiposol" value="<?=$rstiposolicitacao['destiposol'];?>" type="text" id="destiposol" size="60" maxlength="100" /></td>
   </tr> 
 </table>

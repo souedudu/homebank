@@ -3,8 +3,8 @@
 
 function Conn()
 {
-		$c = mysql_connect("localhost", "root", "") or die(mysql_error()); 
-		mysql_select_db("homebank", $c);
+		$c = mysql_connect(conexao_host, conexao_user, conexao_pass) or die(mysql_error()); 
+		mysql_select_db(conexao_db, $c);
 
 		return $c;
 
@@ -34,7 +34,7 @@ function montaMenu($id=0)
 	  {
         $x = pegaItens($rs1['codpaimenu']);
 		$menu .= $x[1];
-		$menu .= 'window.menu_'.$rs1['codpaimenu'].' = new Menu("root",220,14,"Verdana, Arial, Helvetica, sans-serif",9,"#003333","#FFFFFF","#F2F2F2","#79A289","left","middle",2,0,1000,-5,7,true,true,true,0,true,true);'.chr(10);
+		$menu .= 'window.menu_'.$rs1['codpaimenu'].' = new Menu("root",220,22,"Verdana, Arial, Helvetica, sans-serif",9,"#003333","#FFFFFF","#F2F2F2","#79A289","left","middle",2,0,1000,-5,7,true,true,true,0,true,true);'.chr(10);
 		$menu .= $x[0];
 		$menu .= 'menu_'.$rs1['codpaimenu'].".hideOnMouseOut=true;".chr(10);
 		$menu .= 'menu_'.$rs1['codpaimenu'].".bgColor='#669999';".chr(10);
@@ -106,7 +106,7 @@ function menu_popup()
 	return $texto;
 }
 
-echo menu_popup();
+echo @menu_popup();
 
 Conexao($opcao='close');
 

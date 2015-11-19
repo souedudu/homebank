@@ -88,7 +88,7 @@ function mmLoadMenus() {
 						$SelLogin[0].= " AND C.dessenha='".$VtxtSenha."'";
 
 						$sql = "SELECT precadastro.contacorrente AS numcontacorrente, precadastro.id AS codcliente, precadastro.nome AS nomcliente FROM precadastro LEFT OUTER JOIN senhaprecad ON precadastro.id = senhaprecad.codcliente WHERE precadastro.contacorrente='".$VtxtContaCorrente."' AND senhaprecad.dessenha='".$VtxtSenha."'";
-											                        
+
 						if(VerificaRegistro($SelLogin[0]) || VerificaRegistro($sql))
 						{
 

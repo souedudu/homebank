@@ -54,7 +54,7 @@ function formbusca() { //esta funcao chama a funcao PHP exportada pelo Ajax
                   </span>
 </form>
                 <div id="campocccliente">
-  <select name="numcontacorrente" size="5" id="numcontacorrente">
+  <select name="numcontacorrente" size="5" id="numcontacorrente" >
                   </select>
 </div>
                 </body>

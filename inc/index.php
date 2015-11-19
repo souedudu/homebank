@@ -1,5 +1,5 @@
 <?
-	/* Abre conex„o com o banco */
+	/* Abre conex√£o com o banco */
 	if(Conexao($opcao='open',conexao_host,conexao_user,conexao_pass,conexao_db)){
 ?>
 <table width="290" border="0" align="center" cellpadding="2" cellspacing="1">
@@ -17,7 +17,7 @@
 		// Faz um Select na tabela 'movcontacorrente' buscando os ultimos 5 registros
 		$SelMovCC[0] = "SELECT * FROM contacorrente ";
 		$SelMovCC[0].= "WHERE codcliente=".$_SESSION['codcliente']." order by datultmovconta desc";
-		$SelMovCC[0].= " LIMIT 0,1";
+		echo $SelMovCC[0].= " LIMIT 0,1";
 		
 		
 /*		$SelMovCC[0] = "SELECT datultmovconta,vlsaldodispatual FROM movcontacorrente ";
@@ -29,6 +29,7 @@
 		if(VerificaRegistro($SelMovCC[0])){
 			$SelMovCC[1] = @mysql_query($SelMovCC[0]);
 			while($ResMovcc = @mysql_fetch_array($SelMovCC[1])){
+				if (empty($ResMovcc['datultmovconta'])) $ResMovcc['datultmovconta'] = $today = date('Y-m-d');
 			?>
 			<tr>
 				<td><div align="center"><?=FormataData($ResMovcc['datultmovconta'],'pt');?></div></td>
@@ -58,7 +59,7 @@
 		Conexao($opcao='close');
 }else{
 	echo("<div align='center'><p><br><br><br>");
-	echo("N„o foi possÌvel estabelecer uma conex„o com o BD.");
+	echo("N√£o foi poss√≠vel estabelecer uma conex√£o com o BD.");
 	echo("</p></div>");
 }	
 ?>

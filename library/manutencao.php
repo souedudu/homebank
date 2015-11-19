@@ -33,8 +33,9 @@
     <td class="td2"><div align="center"><a href="etl_Endereco.php" class="a">Carregar</a></div>
         <div align="center"></div></td>
   </tr>
-  <tr>
-    <td height="23" bgcolor="#f4f4f4"><div align="center">Cliente</div></td>
+<!--    <tr>
+
+  <td height="23" bgcolor="#f4f4f4"><div align="center">Cliente</div></td>
     <td class="td3"><div align="center">Trabalha.txt</div>
         <div align="center"></div></td>
     <td class="td2"><div align="center"><a href="etl_Trabalha.php" class="a">Carregar</a></div>
@@ -45,6 +46,9 @@
     <td class="td3"><div align="center">Sistema do banco de dados </div></td>
     <td class="td2"><div align="center"><a href="etl_preCadastro.php" class="a">Carregar</a></div></td>
   </tr>
+  
+--> 
+  
   <tr>
     <td height="23" bgcolor="#f4f4f4"><div align="center">ContaCapital</div></td>
     <td class="td3"><div align="center">ContaCapital.txt</div>
@@ -59,7 +63,7 @@
     <td class="td2"><div align="center"><a href="etl_ContaCorrente.php" class="a">Carregar</a></div>
         <div align="center"></div></td>
   </tr>
-  <tr>
+<!--  <tr>
     <td height="23" bgcolor="#f4f4f4"><div align="center">DevolucaoCH</div></td>
     <td class="td3"><div align="center">DevolucaoCH.txt</div>
         <div align="center"></div></td>
@@ -117,10 +121,18 @@
     <td class="td2"><div align="center"><a href="etl_LancamentoCapRem.php" class="a">Carregar</a></div>
         <div align="center"></div></td>
   </tr>
+  
+-->  
 </table>
-<table width="442" border="0" align="center" cellspacing="0" bgcolor="#FFFFFF">
+<table width="442" height="68" border="0" align="center" cellspacing="0" bgcolor="#FFFFFF">
   <tr>
-    <td align="center"><a href="javascript:(history.back(-1))"><img src="../img/bt_voltar.gif" width="53" height="20" border="0"></a></td>
+    <td height="34" align="center" class="td2"><a href="javascript:(history.back(-1))" class="a" >Voltar</a></td>
+    <td align="center" class="td2"><a href="../admin/index.php" class="a" >Ir para o Sistema de OS</a></td>
+  </tr>
+  <tr>
+    <td height="34" colspan="2" align="center"><p>&nbsp;</p>
+    <p>&nbsp;</p>
+    <p>Para atualiza&ccedil;&atilde;o correta dos arquivos &eacute; necess&aacute;rio o upload pr&eacute;vio via FTP para o diret&oacute;rio:<span style="font-weight: bold"> /homebank3/arquivos/txt</span></p></td>
   </tr>
 </table>
 </body>

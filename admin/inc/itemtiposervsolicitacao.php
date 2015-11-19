@@ -74,7 +74,7 @@ if ($_REQUEST['tipoacao'] == "")
   $tipoacao = "Listar";
   
   $sqlString = "Select t.*, s.destiposol From tiposervsolicitacao t, tiposolicitacao s 
-                where t.codtiposol = s.codtiposol";
+                where t.codtiposol = s.codtiposol order by destiposervsol";
 				 
   $rsquery = mysql_query($sqlString);
   $rsresult = mysql_fetch_array($rsquery);  	

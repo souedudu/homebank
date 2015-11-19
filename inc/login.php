@@ -3,14 +3,14 @@ session_start();
 session_unset();
 session_destroy();
 
-//abertura de conexão com o BD
+//abertura de conexÃ£o com o BD
 Conexao($opcao='open',conexao_host,conexao_user,conexao_pass,conexao_db);
 ?><head>
 <title>:. HOMEBANKING .:</title>
 <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
 <link href="site.css" rel="stylesheet" type="text/css">
 <script language="JavaScript" type="text/javascript">
-var cl_on = new Array(")","!","@","#","$","%","¨","&","*","(");
+var cl_on = new Array(")","!","@","#","$","%","Â¨","&","*","(");
 var cl_off = new Array("0","1","2","3","4","5","6","7","8","9");
 function digita(tecla){
 	document.formLogin.txtSenha.value = document.formLogin.txtSenha.value+tecla;
@@ -50,13 +50,12 @@ function alerta(){
 }
 </script>
 <style type="text/css">
-<!--
+
 .btn {
 	font-size:10px;
 	font-family:Verdana,Arial Narrow,Arial,Sans-serif;
 	background:#FFFFFF;
 }
--->
 </style>
 </head>
 
@@ -104,7 +103,7 @@ function alerta(){
           <td>&nbsp;</td>
         </tr>
         <tr class="td2">
-          <td width="90" align="right"><font color="#F2F8E4">Usuário&nbsp;</font></td>
+          <td width="90" align="right"><font color="#F2F8E4">UsuÃ¡rio&nbsp;</font></td>
           <td width="200"><input name="txtContaCorrente" type="text"  id="txtContaCorrente" value="" size="20" maxlength="11" /></td>
         </tr>
         <tr class="td2">
