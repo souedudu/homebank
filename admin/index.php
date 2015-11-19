@@ -1,10 +1,11 @@
-<?
-
+<?@session_start();
+header("Content-Type: text/html; charset=ISO-8859-1",true);
 // DEBUG 
 // ini_set ('display_errors', 'On');
 // ini_set ('error_reporting', E_ALL);
+$bttipoacao = @$_REQUEST['Submit'];
+if(isset($_REQUEST) && count($_REQUEST)) extract($_REQUEST);
 
-session_start();
 include("../library/config.php");
 require_once '../Connections/homebank_conecta.php';
 require_once "auth.php";
@@ -31,12 +32,17 @@ function formataCampo($tipo, $campo)
 		$configuracao = array(4,2,1,6);
 		$caracteres = array(".",".",".","-");
 	}
+	if($tipo=="CNPJ"){
+		$configuracao = array(2,3,3,4);
+		$caracteres = array(".",".","/","-");
+	}
 	if($tipo=="CPF"){
+		$campo = substr($campo, -11);
 		$configuracao = array(3,3,3);
 		$caracteres = array(".",".","-");
 	}
 
-	/////////Executa a configuraÁ„o
+	/////////Executa a configura√ß√£o
 	for($i = 0; $i < count($configuracao); $i++){		
 		$newcampo.= substr($campo, 0, $configuracao[$i]).$caracteres[$i];
 		$campo = substr($campo, $configuracao[$i]);
@@ -49,15 +55,16 @@ function formataCampo($tipo, $campo)
 }
 
 /////////////////////////////////////////////////////
-if ($_SERVER['PHP_SELF']!='/homebank2/admin/insert_solicitacao.php'){
+$teste= explode('/', $_SERVER['PHP_SELF']);
+if ($teste[count($teste)-1]!='insert_solicitacao.php'){
 	include("../library/funcoes.php");
 }else{
 	function Conexao($opcao='close',$host='localhost',$user='root',$pass='',$database='homebank'){
-		// Se opÁ„o=open ent„o abre conex„o com o banco
+		// Se op√ß√£o=open ent√£o abre conex√£o com o banco
 		if($opcao=='open'){
-			// Se os dados passados s„o validos ent„o abre banco.
+			// Se os dados passados s√£o validos ent√£o abre banco.
 			if($conex = mysql_connect($host,$user,$pass) or die("Impossivel conectar ao banco de dados")){
-				mysql_select_db($database) or die("Banco de dados n„o encontrado");
+				mysql_select_db($database) or die("Banco de dados n√£o encontrado");
 				return true;
 			}else{
 				return false;
@@ -70,110 +77,153 @@ if ($_SERVER['PHP_SELF']!='/homebank2/admin/insert_solicitacao.php'){
 		return false;
 	}
 	function FormataData($data='',$formato='pt'){
-	// Se a data vier vazia, preencher com a atual
-	if($data=='')$data=date('d/m/Y');
+		// Se a data vier vazia, preencher com a atual
+		if($data=='')$data=date('d/m/Y');
 
-	switch($formato){
-		case 'en':
-			// Formato 2005-11-11
-			$dia = substr($data,0,2);
-			$mes = substr($data,3,2);
-			$ano = substr($data,6,4);
-			$data = $ano."-".$mes."-".$dia;
-			break;
-		case 'pt':
-			// 2003-11-21 00:00:00
-			// Formato 11/11/2005
-			$dia = substr($data,8,2);
-			$mes = substr($data,5,2);
-			$ano = substr($data,0,4);
-			$data = $dia."/".$mes."/".$ano;
-			break;
+		switch($formato){
+			case 'en':
+				// Formato 2005-11-11
+				$dia = substr($data,0,2);
+				$mes = substr($data,3,2);
+				$ano = substr($data,6,4);
+				$data = $ano."-".$mes."-".$dia;
+				break;
+			case 'pt':
+				// 2003-11-21 00:00:00
+				// Formato 11/11/2005
+				$dia = substr($data,8,2);
+				$mes = substr($data,5,2);
+				$ano = substr($data,0,4);
+				$data = $dia."/".$mes."/".$ano;
+				break;
+		}
+		return $data;
 	}
-	return $data;
+	///////////
+	//if ($_SERVER['PHP_SELF']=='/homebank2/admin/insert_solicitacao.php'){
+	require_once('Sajax.php');
+	function busca2($nome, $tipo, $valor=NULL){
+		if (empty($valor)) return null;
+
+		include('../Connections/homebank_conecta.php');
+		mysql_select_db(conexao_db, $homebank_conecta);
+		$query = "SELECT trim(cliente.desemail) as desemail,trim(cliente.numdddtelefone) as numdddtelefone,trim(cliente.numtelefone) as numtelefone FROM `cliente` INNER JOIN contacorrente ON ( cliente.codcliente = contacorrente.codcliente) where contacorrente.numcontacorrente = $valor";
+		$result = mysql_query($query,$homebank_conecta)or die("L58: ".mysql_error());
+		$row = mysql_fetch_assoc($result);
+		$totalregistros = mysql_num_rows($result);
+		if($totalregistros>=1){
+			$campo = $row['desemail'];
+		}
+		return $campo;
 	}
-///////////
-//if ($_SERVER['PHP_SELF']=='/homebank2/admin/insert_solicitacao.php'){
-require_once('Sajax.php');
-function busca($nome, $tipo, $valor=NULL){
-	include('../Connections/homebank_conecta.php');
-	mysql_select_db($database_homebank_conecta, $homebank_conecta);
-	$query = "SELECT CONCAT(RIGHT(CONCAT('000000',contacorrente.numcontacorrente),6),' - ',cliente.nomcliente) AS cc_nome,contacorrente.numcontacorrente, cliente.codcliente FROM cliente, contacorrente WHERE contacorrente.codcliente=cliente.codcliente
-	AND IF('".$tipo."'='CC', IF('".$nome."'='',1,contacorrente.numcontacorrente = '".$nome."'), IF('".$nome."'='',1,cliente.nomcliente LIKE '".$nome."%'))
-	AND contacorrente.codmodalidadeconta = '01'
-	ORDER BY cliente.nomcliente";
-	$result = mysql_query($query,$homebank_conecta)or die("L58: ".mysql_error());
-	$row = mysql_fetch_assoc($result);
-	$totalregistros = mysql_num_rows($result);
-	if($totalregistros>=1){
-		$campo='<select name="numcontacorrente" id="numcontacorrente" size="5" onchange="mudaPesquisa(\''.$tipo.'\')">';
-		do {
-			$campo.='<option value="'.$row['numcontacorrente'].'" ';
-			if($row['numcontacorrente']==$valor)
-				$campo.='SELECTED';
-			$campo.='>'.$row['cc_nome'].'</option>';
-			
-		} while ($row = mysql_fetch_assoc($result));
+	function busca3($nome, $tipo, $valor=NULL){
+		if (empty($valor)) return null;
+
+		include('../Connections/homebank_conecta.php');
+		mysql_select_db(conexao_db, $homebank_conecta);
+		$query = "SELECT trim(cliente.desemail) as desemail,trim(cliente.numdddtelefone) as numdddtelefone,trim(cliente.numtelefone) as numtelefone FROM `cliente` INNER JOIN contacorrente ON ( cliente.codcliente = contacorrente.codcliente) where contacorrente.numcontacorrente = $valor";
+		$result = mysql_query($query,$homebank_conecta)or die("L58: ".mysql_error());
+		$row = mysql_fetch_assoc($result);
+		$totalregistros = mysql_num_rows($result);
+		if($totalregistros>=1){
+			$campo = trim($row['numdddtelefone']).trim($row['numtelefone']);
+		}
+		return $campo;
 	}
-	$sql = "SELECT id, nome FROM precadastro WHERE IF('".$nome."'='precad', 1, IF('".$nome."'='', 1, nome LIKE '".$nome."%'))";
-	$res = mysql_query($sql, $homebank_conecta)or die("L72: ".mysql_error());
-	if(mysql_num_rows($res) > 0){
-		if($totalregistros==0)
-			$campo='<select name="numcontacorrente" id="numcontacorrente" size="5" onchange="mudaPesquisa(\''.$tipo.'\')">';
-		do {
-			$campo.='<option value="'.$row['id'].'" ';
-			if($row['id']==$valor)
-				$campo.='SELECTED';
-			$campo.='>PRECAD - '.$row['nome'].'</option>';
-			
-		} while ($row = mysql_fetch_assoc($res));
+	function busca($nome, $tipo, $valor=NULL){
+		include('../Connections/homebank_conecta.php');
+		mysql_select_db(conexao_db, $homebank_conecta);
+		$cond = '';
+		if ($tipo == 'CC' and !empty($nome)) 
+			$cond = "and contacorrente.numcontacorrente = $nome ";
+		else if (!empty($nome))
+			$cond = "and trim(cliente.nomcliente) like trim('$nome%') ";
+		$query = "SELECT CONCAT(RIGHT(CONCAT('000000',contacorrente.numcontacorrente),6),' - ',cliente.nomcliente) AS cc_nome,contacorrente.numcontacorrente, cliente.codcliente FROM cliente, contacorrente WHERE contacorrente.codcliente=cliente.codcliente $cond
+		AND contacorrente.codmodalidadeconta = '01'
+		ORDER BY cliente.nomcliente";
+		$result = mysql_query($query,$homebank_conecta)or die("L58: ".mysql_error());
+		$row = mysql_fetch_assoc($result);
+		$totalregistros = mysql_num_rows($result);
+		if($totalregistros>=1){
+			$campo='<select name="numcontacorrente" id="numcontacorrente" size="5" style="width:450" onchange="mudaPesquisa(\''.$tipo.'\')">';
+			do {
+				$campo.='<option value="'.$row['numcontacorrente'].'" ';
+				if($row['numcontacorrente']==$valor)
+					$campo.='SELECTED';
+				$campo.='>'.$row['cc_nome'].'</option>';
+				
+			} while ($row = mysql_fetch_assoc($result));
+		}
+		$sql = "SELECT id, nome FROM precadastro WHERE IF('".$nome."'='precad', 1, IF('".$nome."'='', 1, nome LIKE '".$nome."%'))";
+		$res = mysql_query($sql, $homebank_conecta)or die("L72: ".mysql_error());
+		if(mysql_num_rows($res) > 0){
+			if($totalregistros==0)
+				$campo='<select name="numcontacorrente" id="numcontacorrente" size="5"  style="width:450" onchange="mudaPesquisa(\''.$tipo.'\')">';
+			do {
+				$campo.='<option value="'.$row['id'].'" ';
+				if($row['id']==$valor)
+					$campo.='SELECTED';
+				$campo.='>PRECAD - '.$row['nome'].'</option>';
+				
+			} while ($row = mysql_fetch_assoc($res));
+		}
+
+		if($totalregistros==0 && mysql_num_rows($res)==0)
+			$campo='Nenhum registro encontrado!';
+		else
+			$campo.='</select>';
+
+		return $campo;
 	}
 
-	if($totalregistros==0 && mysql_num_rows($res)==0)
-		$campo='Nenhum registro encontrado!';
-	else
-		$campo.='</select>';
+	$sajax_request_type = "POST"; //forma como os dados serao enviados
+	$sajax_debug_mode = 0;
+	sajax_init(); //inicia o SAJAX
+	sajax_export("busca"); // lista de funcoes a ser exportadas
+	sajax_export("busca2"); // lista de funcoes a ser exportadas
+	sajax_export("busca3"); // lista de funcoes a ser exportadas
+	sajax_handle_client_request();// serve instancias de clientes
+	//////////
+	echo '<script language="JavaScript" type="text/javascript">';
+	sajax_show_javascript(); //gera o javascript 
+	echo '
+	function mudaPesquisa(tipo)
+	{
+		var indexOption1 = document.getElementById(\'numcontacorrente\').selectedIndex;
+		var nome = document.getElementById(\'numcontacorrente\').options[indexOption1].text;
+		var valor = document.getElementById(\'numcontacorrente\').options[indexOption1].value;
+		document.getElementById(\'tipoc\').value = nome;
+		var index = nome.indexOf(\'-\')+2;
+		if(tipo==\'CC\')
+			document.getElementById(\'nomebusca\').value = valor;
+		else
+			document.getElementById(\'nomebusca\').value = nome.substring(index);
+		document.getElementById(\'valor\').value = valor;
+		formbusca();
+	}
+	function mudacampo(campo) { //esta funcao retorna o valor para o campo do formulario
+		document.getElementById("campocccliente").innerHTML = campo;
+	}
+	function desemailcont(campo) { //esta funcao retorna o valor para o campo do formulario
+		document.getElementById("desemailcont").value = campo;
+	}
+	function numtelefonecont(campo) { //esta funcao retorna o valor para o campo do formulario
+		document.getElementById("numtelefonecont").value = campo;
+	}
 
-	return $campo;
-}
-$sajax_request_type = "POST"; //forma como os dados serao enviados
-$sajax_debug_mode = 0;
-sajax_init(); //inicia o SAJAX
-sajax_export("busca"); // lista de funcoes a ser exportadas
-sajax_handle_client_request();// serve instancias de clientes
-//////////
-echo '<script language="JavaScript" type="text/javascript">';
-sajax_show_javascript(); //gera o javascript 
-echo '
-function mudaPesquisa(tipo)
-{
-	var indexOption1 = document.getElementById(\'numcontacorrente\').selectedIndex;
-	var nome = document.getElementById(\'numcontacorrente\').options[indexOption1].text;
-	var valor = document.getElementById(\'numcontacorrente\').options[indexOption1].value;
-	document.getElementById(\'tipoc\').value = nome;
-	var index = nome.indexOf(\'-\')+2;
-	if(tipo==\'CC\')
-		document.getElementById(\'nomebusca\').value = valor;
-	else
-		document.getElementById(\'nomebusca\').value = nome.substring(index);
-	document.getElementById(\'valor\').value = valor;
-	formbusca();
-}
-function mudacampo(campo) { //esta funcao retorna o valor para o campo do formulario
-	document.getElementById("campocccliente").innerHTML = campo;
-}
+	function formbusca() { //esta funcao chama a funcao PHP exportada pelo Ajax
+		document.getElementById("campocccliente").innerHTML = "Aguarde...";
+		var vnome, vtipo;
+		vnome = document.getElementById("nomebusca").value;
+		vtipo = document.getElementById("tipoBusca").value;
+		vval = document.getElementById("valor").value;
+		//alert(vnome);
+		x_busca(vnome, vtipo, vval, mudacampo);
+		x_busca2(vnome, vtipo, vval, desemailcont);
+		x_busca3(vnome, vtipo, vval, numtelefonecont);
 
-function formbusca() { //esta funcao chama a funcao PHP exportada pelo Ajax
-	document.getElementById("campocccliente").innerHTML = "Aguarde...";
-	var vnome, vtipo;
-	vnome = document.getElementById("nomebusca").value;
-	vtipo = document.getElementById("tipoBusca").value;
-	vval = document.getElementById("valor").value;
-	//alert(vnome);
-	x_busca(vnome, vtipo, vval, mudacampo);
-}
-</script>';
-
+	}
+	</script>';
 }
 
 ////////////////////////////////////////////
@@ -182,26 +232,26 @@ $nomePAG = $pg[count($pg)-1];
 
 //if($nomePAG=="")$nomePAG="login.php";
 
-		/* Verifica se a seÁ„o est· aberta */
+		/* Verifica se a se√ß√£o est√° aberta */
 		if(empty($_SESSION['logadoadm'])){
 
-			/* Habilita como padr„o a p·gina Login */
+			/* Habilita como padr√£o a p√°gina Login */
 			$nomePAG="login.php";
-			/* Valida se o usu·rio clicou no bot„o logar */
+			/* Valida se o usu√°rio clicou no bot√£o logar */
 			if(!empty($_REQUEST['btLogin'])){
 
-                /* Coleta as vari·veis do formul·ro login*/
+                /* Coleta as vari√°veis do formul√°ro login*/
 				$VtxtContaCorrente = $_POST['txtContaCorrente'];
 				$VtxtSenha = $_POST['txtSenha'];
 
-				/* Verifica se os dados passados pelo formul·rio est„o vazios */
+				/* Verifica se os dados passados pelo formul√°rio est√£o vazios */
 				if(($VtxtContaCorrente != "") && ($VtxtSenha != ""))
 				{
 
 					if(Conexao($opcao='open',conexao_host,conexao_user,conexao_pass,conexao_db))
 					{
 
-						/* Query SQL para verificaÁ„o dos dados do cliente */
+						/* Query SQL para verifica√ß√£o dos dados do cliente */
 						$SelLogin[0] = "SELECT * FROM usuario ".
 						               " Where dessenha = '".$VtxtSenha."'".
 									   " and desusuario = '".$VtxtContaCorrente."'";
@@ -210,7 +260,7 @@ $nomePAG = $pg[count($pg)-1];
 							$SelLogin[1] = mysql_query($SelLogin[0])or die("L163: ".mysql_error());
 							$ResLogin = mysql_fetch_array($SelLogin[1]);
 
-							/* Vari·veis gerais */
+							/* Vari√°veis gerais */
 							$_SESSION['codusuarioadm'] = $ResLogin['codusuario'];
 							$_SESSION['codtecnicorespadm'] = $ResLogin['codtecnicoresp'];
 							$_SESSION['desusuario'] = strtoupper($ResLogin['desusuario']);
@@ -230,7 +280,7 @@ $nomePAG = $pg[count($pg)-1];
 							
 														
 							
-							//****Atualiza data de ultimo Acesso do Usu·rio*******//
+							//****Atualiza data de ultimo Acesso do Usu√°rio*******//
 							$sqlStringdataultacesso = "update usuario set dtultimoacesso = '".$datault."' where codusuario = ".$_SESSION['codusuarioadm'];																										
 	    					$rsqrydataultacesso = mysql_query($sqlStringdataultacesso)or die("L187: ".mysql_error());    						
 							
@@ -238,7 +288,7 @@ $nomePAG = $pg[count($pg)-1];
 
 							$_SESSION['logadoadm'] = 'ok';
 
-							/* Inclui p·gina inicial */
+							/* Inclui p√°gina inicial */
 							$nomePAG="inicio.php";
 
 							//$nomePAG="login.php";
@@ -266,42 +316,56 @@ $nomePAG = $pg[count($pg)-1];
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
 <html>
 <head>
-<title>:. HOMEBANKING .:</title>
-<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<title>Sistema de OS Sicoob</title>
+<meta charset="ISO-8859-1">
 <link href="site.css" rel="stylesheet" type="text/css">
+<link rel="stylesheet" href="dist/chosen/chosen.css">
+
 <script src="../scripts.js" type="text/javascript"></script>
 <script language="JavaScript" src="../mm_menu.js"></script>
-
+<link href="dist/bootstrap/css/bootstrap.css" rel="stylesheet">
+<link href="dist/css/bootstrap-colorpicker.min.css" rel="stylesheet">
+<script src="dist/js/jquery-2.1.1.min.js"></script>
+<script src="dist/js/jquery-ui.js"></script>
+<script src="dist/js/bootstrap-colorpicker.min.js"></script>
+<script src="dist/chosen/chosen.jquery.js" type="text/javascript"></script>
+<script type="text/javascript">
+  $(document).ready(function($) {
+	    $('select').not('.notchosen').chosen();
+  });
+</script>
 <?
     // Monta Menu
     if(isset($_SESSION['logadoadm']))
       include ("menupopup.php");
 ?>
 <style type="text/css">
-<!--
+
 .style4 {
 	color: #333333;
 	font-weight: bold;
 }
-.style5 {color: #FFFFFF}
--->
+.style5 {
+	color: #FFFFFF;
+}
+
 </style>
 </head>
 
 <body background="../img/bg.gif" leftmargin="0" topmargin="0" marginwidth="0" marginheight="0">
 <script language="JavaScript1.2">mmLoadMenus();</script>
-<table width="770" border="0" align="center" cellpadding="0" cellspacing="0">
+<table width="100%" border="0" align="center" cellpadding="0" cellspacing="0">
   <tr valign="top">
-    <td width="259"><a href="index.php"><img src="../img/logomarca.jpg" width="284" height="61" border="0"></a></td>
-    <td width="511" valign="bottom" background="../img/bg_topo.jpg">
-      <table width="475" border="0" cellspacing="0" cellpadding="0">
+    <td width="284" style="background-image: url('../img/logomarcabkp.jpg');"><a href="index.php"><img src="../img/logomarca.jpg" width="244" height="61" border="0"></a></td>
+    <td valign="bottom" background="../img/bg_topo.jpg">
+      <table width="934" border="0" cellpadding="0" cellspacing="0">
         <tr>
-          <td width="80" align="right">
+          <td width="95" height="34" align="right">
 		     <? if(!empty($_SESSION['codusuarioadm']))
 			   echo "<font color='#FFFFFF'>Usu·rio:&nbsp;";
              ?>
 		  </td>
-          <td><font color="#FFFFFF"><?
+          <td width="110"><font color="#FFFFFF"><?
 		  if(!empty($_SESSION['codusuarioadm'])){
 		  	echo($_SESSION['codusuarioadm']);
 		  }?></font><font color="#FFFFFF"> <?
@@ -309,12 +373,17 @@ $nomePAG = $pg[count($pg)-1];
 		  	echo " - ".($_SESSION['desusuario']);
 		  }?>
           </font></td>
-          <td width="78">
+          <td width="105">
 <? 				if(!empty($_SESSION['codusuarioadm'])){
  		          echo "<img src='../img/ultimo_acesso.jpg' width='75' height='17'>";
 ?> 
 		  </td>
-          <td width="66"><font color="#FFFFFF"><? echo FormataData($_SESSION['ultimo_acesso'],$formato='pt'); ?></font></td>
+          <td width="227"><font color="#FFFFFF"><? echo FormataData($_SESSION['ultimo_acesso'],$formato='pt'); ?></font></td>
+          <td width="155" rowspan="2">&nbsp;</td>
+          <td width="59" rowspan="2"><a href="https://web.sipag.com.br/sipagnet/emi/site " target="_blank"><img src="img/icon_sipag.png" alt="Sipagnet" width="56" height="51" class="active"/></a></td>
+          <td width="58" rowspan="2"><a href="http://172.16.2.188" target="_blank"><img src="img/icon_sisbr.png" width="56" height="51" alt="SISBR"/></a></td>
+          <td width="59" rowspan="2"><a href="https://zimbra.crediembrapa.com.br" target="_blank"><img src="img/icon_email.png" width="56" height="51" alt="E-MAIL"/></a></td>
+          <td width="66" rowspan="2"><a href="http://10.6.8.151/proton/protocolo/pesquisa_avancada.php?area=documento" target="_blank"><img src="img/icon_proton.png" width="56" height="51" alt="PROTON"/></a></td>
         </tr>
 <?
 					
@@ -323,9 +392,10 @@ $nomePAG = $pg[count($pg)-1];
     </table></td>
   </tr>
 </table>
-<table width="770" border="0" align="center" cellpadding="0" cellspacing="0">
+</table>
+<table width="100%" border="0" align="center" cellpadding="0" cellspacing="0">
   <tr>
-    <td colspan="2" valign="top" background="../img/bg_caixapostal.jpg">
+    <td colspan="2" valign="top" background="img/bg_caixapostal.jpg">
 <?
 if(isset($_SESSION['logadoadm']))
 {
@@ -342,7 +412,7 @@ else
 ?></td>
   </tr>
   <tr>
-  	<td width="197" height="34" valign="top" background="img/bg_caixapostal.jpg">
+  	<td width="55%" height="34" valign="top" background="img/fundo_novo.jpg">
 <?
 if(isset($_SESSION['logadoadm']))
 {
@@ -353,40 +423,44 @@ if(isset($_SESSION['logadoadm']))
 else
 	echo "&nbsp;";
 ?></td>
-    <td width="567" height="113"valign="top" background="img/topo02.jpg">
+    <td width="45%" height="113"valign="top" background="img/topo02.jpg">
 	<?
-	if ($_SESSION['logadoadm'] != ""){
+	if (@$_SESSION['logadoadm'] != ""){
 		
-		// Abre conex„o com o bd
+		// Abre conex√£o com o bd
 		$achou = Conexao($opcao='open',conexao_host,conexao_user,conexao_pass,conexao_db);
 		
-		$sqlStringAviso = "Select * From aviso where codpainel = 0 and flaativo = 's' order by dataviso desc";
+			$sqlStringAviso = "Select * From aviso where codpainel = 0 and flaativo = 's' order by dataviso desc limit 3";
 	    $rsqryAviso = mysql_query($sqlStringAviso)or die("L317: ".mysql_error());
     	$rsavisoadmin = mysql_fetch_array($rsqryAviso);
-?>
-	  <div style="position: fixed; top:0px; margin-left:307px; left: 311px; height: 89px; width: 239px;" align="center"> 
-	    <p class="style4"><? if ($rsavisoadmin['desaviso']) echo "<BR>".$rsavisoadmin['desaviso']."<BR>Postada em (".FormataData($rsavisoadmin['dataviso'],'pt').")";?></p>
+		?>
+     <div style="position: relative; margin-left:307px; top:-10px; width: 239px;" > 
+     <?php do { ?>
+	    	<? if ($rsavisoadmin['desaviso']) echo "<br><b title='".$rsavisoadmin['desaviso']."'>".substr($rsavisoadmin['desaviso'], 0,20) ."...</b><BR>".FormataData($rsavisoadmin['dataviso'],'pt');?>
+      <?php } while ($rsavisoadmin = mysql_fetch_assoc($rsqryAviso)); ?>
       </div>
+
+	
 	  
 <?	
 	}else{
 ?>
-	  <div style="position: fixed; top:95px; margin-left:307px; left: 311px; height: 89px; width: 239px;" align="center"> 
-	    <p class="style4"><br>FaÁa o Seu LOGIN!</p>
+     <div style="position: relative; margin-left:307px; top:-10px; width: 239px;" > 
+	    <p class="style4"><br>Efetue o login!</p>
       </div>
 <?	
 	}
 ?>	</td>
   </tr>
 </table>
-<table width="770" border="0" align="center" cellpadding="0" cellspacing="0" bgcolor="828916">
+<table width="100%" border="0" align="center" cellpadding="0" cellspacing="0" bgcolor="E1EAE5">
   <tr>
     <td height="5" valign="top" bgcolor="#FFFFFF"><img src="../img/dot_branco.jpg" width="1" height="5"></td>
   </tr>
 </table>
 
 
-<table width="770" border="0" align="center" cellpadding="0" cellspacing="0">
+<table width="100%" border="0" align="center" cellpadding="0" cellspacing="0">
   <tr valign="top">
 <?
   $nomePAGcount = strlen($nomePAG);
@@ -395,91 +469,94 @@ else
 
 ?>
   
-    <td width="267"  bgcolor="828916" align="left"><img src="img/<?=(is_file($nomePAGaux.".jpg"))?$nomePAGaux:"index"?>.jpg"></td>
-    <td align="right" valign="middle" bgcolor="828916"><form action="ver.php" method="get" name="formlocalizaordem" id="formlocalizaordem">
-        <input name="cod" type="text" id="cod" value="Localizar Ordem de Servi&ccedil;o" size="30" onClick="this.value='';">
+    <td width="267"  bgcolor="E1EAE5" align="left"><img src="img/<?=(is_file($nomePAGaux.".jpg"))?$nomePAGaux:"index"?>.jpg"></td>
+    <td align="right" valign="middle" bgcolor="E1EAE5"><form action="ver.php" method="get" name="formlocalizaordem" id="formlocalizaordem">
+        <input name="cod" type="text" id="cod" value="Busca R·pida" size="30" onClick="this.value='';">
         <input type="submit" name="Submit" value="OK">
     </form></td>
   </tr>
 </table>
-<table width="770" border="0" align="center" cellpadding="0" cellspacing="0" bgcolor="#FFFFFF">
-  <tr>
-    <td>&nbsp;
+	
+<table width="100%" border="0" align="center" cellpadding="0" cellspacing="0" bgcolor="#FFFFFF">
+  <tr bgcolor="#FFFFFF">
+    <td align="center">&nbsp;
         <BR>
 		<?
             switch($nomePAG)
             {
-				case("inicio.php"):
-					include("inc/index.php");
+							case("inicio.php"):
+								@include("inc/index.php");
 
-				default: include("inc/$nomePAG");
-			}
+							default: @include("inc/$nomePAG");
+						}
         ?>
 		<br>
     </td>	
   </tr>
+  <tr>
+  	<td height="410" bgcolor="#FFFFFF"></td>
+  </tr>
 </table>
 
-<table width="770" border="0" align="center" cellpadding="0" cellspacing="0">
+<table width="100%" border="0" align="center" cellpadding="0" cellspacing="0">
   <tr>
-    <td><img src="../img/rodape.gif" width="770" height="63"></td>
+    <td><img src="../img/rodape.gif" width="100%"></td>
   </tr>
 </table>
 
 
 
-<map name="Map">
+
 <?
    
-   
-   //CrÌtica de Acesso ao Menu Cadastrar Usu·rio
-   if ($_SESSION['flapercadusu'] == "s")
+   //Cr√≠tica de Acesso ao Menu Cadastrar Usu√°rio
+   if (@$_SESSION['flapercadusu'] == "s")
    {
-    $cadastrausuario = "cadastrausuario.php";
+    	$cadastrausuario = "cadastrausuario.php";
    }else{
-         $cadastrausuario = "#";
+      $cadastrausuario = "#";
    }
    
-   //CrÌtica de Acesso ao Menu Cadastrar Menu
-   if ($_SESSION['flapercadmenu'] == "s")
+   //Cr√≠tica de Acesso ao Menu Cadastrar Menu
+   if (@$_SESSION['flapercadmenu'] == "s")
    {
-    $cadastramenu = "cadastramenu.php";
+    	$cadastramenu = "cadastramenu.php";
    }else{
-         $cadastramenu = "#";
+      $cadastramenu = "#";
    }
-   //CrÌtica de Acesso ao Menu Consultar OS
-   if ($_SESSION['flapercadmenu'] == "s")
+   //Cr√≠tica de Acesso ao Menu Consultar OS
+   if (@$_SESSION['flapercadmenu'] == "s")
    {
-    $cadastramenu = "cadastramenu.php";
+    	$cadastramenu = "cadastramenu.php";
    }else{
-         $cadastramenu = "#";
+      $cadastramenu = "#";
    }
-   //CrÌtica de Acesso ao Menu Concluir OS
-   if ($_SESSION['flaconcluiros'] == "s")
+   //Cr√≠tica de Acesso ao Menu Concluir OS
+   if (@$_SESSION['flaconcluiros'] == "s")
    {
-    $concluisolicitacao = "concluisolicitacao.php";
+    	$concluisolicitacao = "concluisolicitacao.php";
    }else{
-         $concluisolicitacao = "";
+      $concluisolicitacao = "";
    }
    
 ?>
-<area shape="rect" coords="61,4,145,20" href="listausuarios.php" onMouseOut="MM_startTimeout();">
+<map name="Map">
+<area shape="rect" coords="40,4,155,20" href="listausuarios.php" onMouseOut="MM_startTimeout();">
 
-<area shape="rect" coords="175,3,256,21" href="<?=$cadastramenu?>" onMouseOut="MM_startTimeout();">
-<area shape="rect" coords="280,4,331,20" href="#" onMouseOver="MM_showMenu(window.menu_1,283,21,null,'image1')" onMouseOut="MM_startTimeout();">
-<area shape="rect" coords="350,5,399,21" href="#" onMouseOver="MM_showMenu(window.menu_2,350,21,null,'image1')" onMouseOut="MM_startTimeout();">
+<area shape="rect" coords="180,3,290,21" href="<?=$cadastramenu?>" onMouseOut="MM_startTimeout();">
+<area shape="rect" coords="315,4,380,20" href="#" onMouseOver="MM_showMenu(window.menu_1,283,21,null,'image1')" onMouseOut="MM_startTimeout();">
+<area shape="rect" coords="405,5,475,21" href="#" onMouseOver="MM_showMenu(window.menu_2,350,21,null,'image1')" onMouseOut="MM_startTimeout();">
 
-<area shape="rect" coords="415,2,476,21" href="alterarsenha.php" onMouseOut="MM_startTimeout();">
-<area shape="rect" coords="498,2,518,19" href="logout.php" onMouseOut="MM_startTimeout();">
+<area shape="rect" coords="495,2,585,21" href="alterarsenha.php" onMouseOut="MM_startTimeout();">
+<area shape="rect" coords="610,2,635,19" href="logout.php" onMouseOut="MM_startTimeout();">
 
-<area shape="rect" coords="498,2,515,21" href="logout.php" onMouseOut="MM_startTimeout();">
 
 </map>
 <?
-//CrÌtica de Acesso ao Menu Consultar OS
-   if ($_SESSION['logadoadm'] != "")
+//Cr√≠tica de Acesso ao Menu Consultar OS
+   if (@$_SESSION['logadoadm'] != "")
    {
-   	// Abre conex„o com o bd
+   	// Abre conex√£o com o bd
 		$achou = Conexao($opcao='open',conexao_host,conexao_user,conexao_pass,conexao_db);
 		
 		$sqlString = "Select * From acessousu where codusuario = ".$_SESSION['codusuarioadm']." and codmenu = 31";
@@ -493,11 +570,12 @@ else
 		}
 
 ?>
+
 <map name="Map2">
 
-  <area shape="rect" coords="47,27,112,41" href="<?=auth($_SESSION['codusuarioadm'], 'insert_solicitacao.php')?>" onMouseOut="MM_startTimeout();">
-<area shape="rect" coords="46,46,108,60" href="<?=auth($_SESSION['codusuarioadm'], 'consultasolicitacao.php')?>" onMouseOut="MM_startTimeout();">
-<area shape="rect" coords="46,63,102,77" href="<?=auth($_SESSION['codusuarioadm'], 'tecnicos_solicitacoes.php')?>" onMouseOut="MM_startTimeout();">
+  <area shape="rect" coords="47,27,136,42" href="<?=auth($_SESSION['codusuarioadm'], 'insert_solicitacao.php')?>" onMouseOut="MM_startTimeout();">
+<area shape="rect" coords="46,46,131,61" href="<?=auth($_SESSION['codusuarioadm'], 'consultasolicitacao.php')?>" onMouseOut="MM_startTimeout();">
+<area shape="rect" coords="46,63,166,77" href="<?=auth($_SESSION['codusuarioadm'], 'tecnicos_solicitacoes.php')?>" onMouseOut="MM_startTimeout();">
 <area shape="rect" coords="46,81,85,95" href="<?=auth($_SESSION['codusuarioadm'], 'solicitatriagem.php')?>" onMouseOut="MM_startTimeout();">
 </map>
 <?
